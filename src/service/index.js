@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../config";
+import { BASE_URL, IMAGE_FETCH_URL } from "../config";
 
 const instance = axios.create();
 
