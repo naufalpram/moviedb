@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
-import RecommendationCarousel from '../../components/Carousel'
-import CarouselCard from '../../components/Carousel/CarouselCard';
+import RecommendationCarousel from '../../components/CardContainer'
+import CarouselCard from '../../components/Card/CarouselCard';
 import RecommendationSkeleton from './_components/CarouselSkeleton';
 import { useFetch } from '../../hooks/useFetch';
 

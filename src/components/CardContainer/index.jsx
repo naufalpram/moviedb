@@ -1,6 +1,6 @@
 import React from 'react';
 
-const index = ({ header = null, wrap = false, children }) => {
+const CardContainer = ({ header = null, wrap = false, children }) => {
   return (
     <div className='w-full mx-28 overflow-x-hidden'>
         {header}
@@ -11,4 +11,4 @@ const index = ({ header = null, wrap = false, children }) => {
   )
 }
 
-export default index
+export default CardContainer

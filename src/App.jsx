@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import List from './pages/List';
 import Home from './pages/Home';
+import { AuthProvider } from './store/auth';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: 'list',
+        path: ':mediaType',
         element: <List />
       }
     ]
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
+    <AuthProvider>
       <RouterProvider router={router} />
+    </AuthProvider>
   )
 }
 

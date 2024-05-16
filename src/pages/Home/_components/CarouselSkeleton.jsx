@@ -1,5 +1,5 @@
 import React from 'react'
-import CardSkeleton from '../../../components/Carousel/CardSkeleton'
+import CardSkeleton from '../../../components/Card/CardSkeleton'
 
 const CarouselSkeleton = ({ length, isWithTitle }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import TrendingCarousel from '../../components/Carousel'
+import TrendingCarousel from '../../components/CardContainer'
 import { useFetch } from '../../hooks/useFetch';
-import CarouselCard from '../../components/Carousel/CarouselCard';
+import CarouselCard from '../../components/Card/CarouselCard';
 import TrendingHeader from './_components/TrendingHeader';
 import TrendingSkeleton from './_components/CarouselSkeleton';
 
@@ -34,7 +34,6 @@ const Trending = () => {
 
             {(!loading && !error) && data?.map(media => {
                 const title = media.title || media.name;
-                console.log(title)
                 return <CarouselCard 
                             key={`${media.id}-${title.split(' ').join('-')}`}
                             imagePath={media.poster_path} 

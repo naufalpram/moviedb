@@ -1,6 +1,5 @@
-const getJSONFromLocalStorage = (key) => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : [];
+const getFromLocalStorage = (key) => {
+    return localStorage.getItem(key);
 }
 
 const saveJSONToLocalStorage = (key, value) => {
@@ -33,4 +32,4 @@ const removeLoginState = () => {
     localStorage.removeItem('cart');
 }
 
-export { getJSONFromLocalStorage, saveJSONToLocalStorage, removeFromLocalStorage, saveToLocalStorage, getIsLogin, setLoginState, removeLoginState };
+export { getFromLocalStorage, saveJSONToLocalStorage, removeFromLocalStorage, saveToLocalStorage, getIsLogin, setLoginState, removeLoginState };

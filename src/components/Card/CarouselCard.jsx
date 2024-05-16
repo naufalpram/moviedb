@@ -9,14 +9,15 @@ const EmptyImage = () => (
   </div>
 )
 
-const CarouselCard = ({ imagePath, title }) => {
+const CarouselCard = ({ imagePath, title, date}) => {
   return (
     <div className='flex flex-col gap-4 items-center min-w-52'>
         {imagePath ? 
           <img src={`${IMAGE_FETCH_URL}${imagePath}`} alt="Movie Poster" className='w-52 h-auto rounded-md cursor-pointer' /> : 
           <EmptyImage />
         }
-        {title && <p className='m-0 font-semibold max-w-48 text-center'>{title}</p>}
+        {title && <p className='m-0 font-semibold max-w-48'>{title}</p>}
+        {date && <p className='text-sm font-semibold max-w-48 text-unselecet-gray'>{date}</p>}
     </div>
   )
 }

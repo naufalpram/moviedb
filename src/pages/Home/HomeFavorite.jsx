@@ -1,5 +1,5 @@
 import React from 'react';
-import FavoriteCarousel from '../../components/Carousel';
+import FavoriteCarousel from '../../components/CardContainer';
 import FavoriteHeader from './_components/FavoriteHeader';
 import CarouselSkeleton from './_components/CarouselSkeleton';
 
