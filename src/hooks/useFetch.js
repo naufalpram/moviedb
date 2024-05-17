@@ -39,7 +39,7 @@ function stateReducer(state, action) {
 }
 
 // dataMapper must return object with property "data"
-export const useFetch = (url, queryParams, dataMapper) => {
+export const useFetch = (url, queryParams, dataMapper, forImage = false) => {
     const [state, dispatch] = useReducer(stateReducer, initialState);
     
     const fetchData = useCallback(() => {
@@ -47,7 +47,7 @@ export const useFetch = (url, queryParams, dataMapper) => {
         service.get(url, {
             params: {
                 ...queryParams,
-                language: "en-US",
+                language: !forImage ? "en-US" : null,
                 api_key: API_KEY
             }
         })

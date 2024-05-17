@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import List from './pages/List';
 import Home from './pages/Home';
+import Detail from './pages/Detail'
 import { AuthProvider } from './store/auth';
 import { SearchProvider } from './store/search';
 
@@ -16,7 +17,16 @@ const router = createBrowserRouter([
       },
       {
         path: ':mediaType',
-        element: <List />
+        children: [
+          {
+            index: true,
+            element: <Detail />
+          },
+          {
+            path: ':idName',
+            element: <Detail />
+          }
+        ]
       }
     ]
   }

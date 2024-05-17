@@ -30,8 +30,11 @@ const SearchResult = ({ mediaType, query }) => {
 
             {status === 'resolved' && data?.map(media => {
                 const title = media.title || media.name;
+                const path = `${media.id}-${title.split(' ').join('-')}`
                 return <Card 
-                            key={`${media.id}-${title.split(' ').join('-')}`}
+                            key={path}
+                            path={path}
+                            mediaType={media.media_type}
                             imagePath={media.poster_path || media.profile_path} 
                             title={title}
                             date={media.release_date || media.first_air_date}
