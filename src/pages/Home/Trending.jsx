@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import TrendingCarousel from '../../components/CardContainer'
 import { useFetch } from '../../hooks/useFetch';
-import CarouselCard from '../../components/Card/CarouselCard';
+import Card from '../../components/Card/Card';
 import TrendingHeader from './_components/TrendingHeader';
-import TrendingSkeleton from './_components/CarouselSkeleton';
+import TrendingSkeleton from '../../components/CardContainer/ContainerSkeleton';
 
 const Trending = () => {
   const [timeWindow, setTimeWindow] = useState("day");
-  const {data, loading, error, fetchData} = useFetch(
+  const {data, loading, error, status, fetchData} = useFetch(
     `/trending/all/${timeWindow}`,
     {page: 1},
     useCallback(
@@ -32,9 +32,9 @@ const Trending = () => {
             {loading && <TrendingSkeleton length={6} isWithTitle={true} />}
             {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
 
-            {(!loading && !error) && data?.map(media => {
+            {status === 'resolved' && data?.map(media => {
                 const title = media.title || media.name;
-                return <CarouselCard 
+                return <Card 
                             key={`${media.id}-${title.split(' ').join('-')}`}
                             imagePath={media.poster_path} 
                             title={title}

@@ -1,9 +1,9 @@
 import React from 'react'
 import MainInput from './MainInput'
 
-const index = () => {
+const index = ({ placeholder, onSubmit }) => {
   return (
-    <MainInput placeholder="Search for movies or tv series" />
+    <MainInput placeholder={placeholder} onClick={onSubmit} />
   )
 }
 

@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import List from './pages/List';
 import Home from './pages/Home';
 import { AuthProvider } from './store/auth';
+import { SearchProvider } from './store/search';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <SearchProvider>
+        <RouterProvider router={router} />
+      </SearchProvider>
     </AuthProvider>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import FavoriteCarousel from '../../components/CardContainer';
 import FavoriteHeader from './_components/FavoriteHeader';
-import CarouselSkeleton from './_components/CarouselSkeleton';
+import CarouselSkeleton from '../../components/CardContainer/ContainerSkeleton';
 
 const HomeFavorite = () => {
   const length = 0

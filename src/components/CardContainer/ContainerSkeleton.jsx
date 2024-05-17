@@ -1,7 +1,7 @@
 import React from 'react'
-import CardSkeleton from '../../../components/Card/CardSkeleton'
+import CardSkeleton from '../Card/CardSkeleton'
 
-const CarouselSkeleton = ({ length, isWithTitle }) => {
+const ContainerSkeleton = ({ length, isWithTitle }) => {
   return (
     <>
         {Array.from({ length: length }, (_, i) => <CardSkeleton key={i} isWithTitle={isWithTitle} />)}
@@ -9,4 +9,4 @@ const CarouselSkeleton = ({ length, isWithTitle }) => {
   )
 }
 
-export default CarouselSkeleton
+export default ContainerSkeleton

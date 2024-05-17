@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import RecommendationCarousel from '../../components/CardContainer'
-import CarouselCard from '../../components/Card/CarouselCard';
-import RecommendationSkeleton from './_components/CarouselSkeleton';
+import Card from '../../components/Card/Card';
+import RecommendationSkeleton from '../../components/CardContainer/ContainerSkeleton';
 import { useFetch } from '../../hooks/useFetch';
 
 const Recommendation = () => {
-  const { data, loading, error, fetchData } = useFetch(
+  const { data, loading, error, status, fetchData } = useFetch(
     `/movie/653346/recommendations`,
     {page: 1},
     useCallback((data) => ({
@@ -24,9 +24,9 @@ const Recommendation = () => {
             <RecommendationCarousel wrap>
                 {loading && <RecommendationSkeleton length={4} isWithTitle={false} />}
                 {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
-                {(!loading && !error) && data?.map(media => {
+                {status === 'resolved' && data?.map(media => {
                     const title = media.title || media.name;
-                    return <CarouselCard 
+                    return <Card 
                                 key={`${media.id}-${title.split(' ').join('-')}`}
                                 imagePath={media.poster_path} 
                                 title={title}

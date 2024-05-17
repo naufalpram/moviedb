@@ -9,9 +9,9 @@ const EmptyImage = () => (
   </div>
 )
 
-const CarouselCard = ({ imagePath, title, date}) => {
+const Card = ({ imagePath, title, date}) => {
   return (
-    <div className='flex flex-col gap-4 items-center min-w-52'>
+    <div className={`flex flex-col gap-4 items-center min-w-52 ${title && date && 'justify-between'}`}>
         {imagePath ? 
           <img src={`${IMAGE_FETCH_URL}${imagePath}`} alt="Movie Poster" className='w-52 h-auto rounded-md cursor-pointer' /> : 
           <EmptyImage />
@@ -22,4 +22,4 @@ const CarouselCard = ({ imagePath, title, date}) => {
   )
 }
 
-export default CarouselCard
+export default Card

@@ -4,22 +4,26 @@ import Card from '../../components/Card/Card';
 import ContainerSkeleton from '../../components/CardContainer/ContainerSkeleton';
 import { useFetch } from '../../hooks/useFetch';
 
-const Result = ({ mediaType, category, latestPage }) => {
+const SearchResult = ({ mediaType, query }) => {
   const {data, loading, error, status, fetchData} = useFetch(
-    `/${mediaType}/${category}`,
-    {page: latestPage},
+    `/search/${mediaType}`,
+    {
+      page: 1,
+      query: query.keyword
+    },
     useCallback((data) => ({
-        data: data?.results
+      data: data?.results
     }), [])
   );
-  
-  // every media change, do fetch
+
   useEffect(() => {
-    fetchData()
-  }, [mediaType, category, latestPage]);
+    if (query.keyword && query.keyword.trim() !== '') {
+        fetchData();
+    }
+  }, [query]);
 
   return (
-    <section id='list-result' className='mt-12 flex w-full'>
+    <section id='search-result' className='mt-12 flex w-full'>
         <ResultContainer wrap>
             {loading && <ContainerSkeleton length={12} isWithTitle={true} />}
             {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
@@ -38,4 +42,4 @@ const Result = ({ mediaType, category, latestPage }) => {
   )
 }
 
-export default Result
+export default SearchResult

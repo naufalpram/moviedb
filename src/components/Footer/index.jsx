@@ -30,7 +30,7 @@ const Footer = () => {
                     <p className='font-bold text-lg'>Sources</p>
                 </li>
                 <li className='cursor-pointer list-none mt-3'>      
-                    <p className='cursor-pointer text-white/80' onClick={() => navigate('list')}>MovieDB API</p>
+                    <a href='https://developer.themoviedb.org/reference/intro/getting-started'><p className='cursor-pointer text-white/80'>MovieDB API</p></a>
                 </li>
                 <li className='cursor-pointer list-none mt-3'>      
                     <p className='cursor-pointer text-white/80' onClick={() => navigate('list')}>Figma Design</p>
