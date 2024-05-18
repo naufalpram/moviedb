@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
-import BasicData from './_components/BasicData'
+import BasicInfo from './_components/BasicInfo'
 import { useFetch } from '../../hooks/useFetch';
+import { IMAGE_FETCH_URL } from '../../config';
 
 const DetailData = ({ mediaType, id, setBackdrop }) => {
   const {data, loading, error, status, fetchData} = useFetch(
@@ -21,11 +22,14 @@ const DetailData = ({ mediaType, id, setBackdrop }) => {
   }, [data]);
 
   return (
-    <section id='detail-data' className='mt-12 w-full'>
-        <div className='w-full mx-28 flex justify-between'>
-            <BasicData result={{
+    <section id='detail-data' className='mt-12 w-full mx-28'>
+        <div className='w-full flex gap-40'>
+          <BasicInfo result={{
                 data, loading, error, status
-            }} />
+          }} />
+          <div className='bg-white flex flex-col items-center'>
+            <img src={`${IMAGE_FETCH_URL}${data?.poster_path}`} alt="Poster Image" className='w-80 h-auto' />
+          </div>
         </div>
     </section>
   )

@@ -19,7 +19,7 @@ const Card = ({ path, mediaType, imagePath, title, date}) => {
           <EmptyImage />
         }
         {title && <p className='m-0 font-semibold max-w-48 hover:text-secondary-200 cursor-pointer' onClick={() => navigate(`${mediaType}/${path}`)}>{title}</p>}
-        {date && <p className='text-sm font-semibold max-w-48 text-unselecet-gray'>{date}</p>}
+        {date && <p className='text-sm font-semibold max-w-48 text-unselect-gray'>{date}</p>}
     </div>
   )
 }

@@ -16,8 +16,12 @@ export default {
           400: "#FFC300",
           200: "#FFD60A"
         },
-        "unselecet-gray": "#515151",
+        "unselect-gray": "#515151",
       },
+      fontFamily: {
+        default: ['Inter', 'sans-serif'],
+        'title': ['Montserrat', 'sans-serif']
+      }
     },
   },
   plugins: [],
