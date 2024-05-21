@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect } from 'react'
-import BasicInfo from './_components/BasicInfo'
+import BasicInfo from './_components/BasicInfo';
 import { useFetch } from '../../hooks/useFetch';
 import { IMAGE_FETCH_URL } from '../../config';
+import { IoMdOpen } from 'react-icons/io';
+import { Button, ButtonContainer } from '../../components';
 
 const DetailData = ({ mediaType, id, setBackdrop }) => {
   const {data, loading, error, status, fetchData} = useFetch(
@@ -26,8 +28,16 @@ const DetailData = ({ mediaType, id, setBackdrop }) => {
           <BasicInfo result={{
                 data, loading, error, status
           }} />
-          <div className='flex-col items-center'>
+          <div className='flex flex-col items-center'>
             <img src={`${IMAGE_FETCH_URL}${data?.poster_path}`} alt="Poster Image" className='w-80 h-auto' />
+            <ButtonContainer display='flex flex-col gap-2'>
+              <Button variant='secondary' icon={<IoMdOpen style={{width: '24px', height: '24px'}} />}>
+                Visit Page
+              </Button>
+              <Button variant='primary'>
+                Add to Favorite
+              </Button>
+            </ButtonContainer>
           </div>
         </div>
     </section>

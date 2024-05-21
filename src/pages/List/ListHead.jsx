@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import ButtonContainer from '../../components/Buttons/ButtonContainer';
-import Button from '../../components/Buttons/Button';
-import SearchInput from '../../components/Input';
+import React from 'react'
+import { ButtonContainer, Button, Input as SearchInput } from '../../components';
 import { MEDIA_MENU } from '../../config';
 import { useSearch } from '../../hooks/useSearch';
 

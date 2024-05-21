@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import ResultContainer from '../../components/CardContainer';
-import Card from '../../components/Card/Card';
-import ContainerSkeleton from '../../components/CardContainer/ContainerSkeleton';
+import { CardContainer, ContainerSkeleton, Card} from '../../components';
 import { useFetch } from '../../hooks/useFetch';
 
 const Result = ({ mediaType, category, latestPage }) => {
@@ -20,7 +18,7 @@ const Result = ({ mediaType, category, latestPage }) => {
 
   return (
     <section id='list-result' className='mt-12 flex w-full'>
-        <ResultContainer wrap>
+        <CardContainer wrap>
             {loading && <ContainerSkeleton length={12} isWithTitle={true} />}
             {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
 
@@ -35,7 +33,7 @@ const Result = ({ mediaType, category, latestPage }) => {
                             date={media.release_date || media.first_air_date}
                         />
             })}
-        </ResultContainer>
+        </CardContainer>
     </section>
   )
 }

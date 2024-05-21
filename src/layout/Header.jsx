@@ -1,8 +1,7 @@
 import React from 'react';
-import navLogo from '../../assets/logo.svg';
+import navLogo from '../assets/logo.svg';
 import { useNavigate } from 'react-router-dom';
-import Button from '../Buttons/Button';
-import ButtonContainer from '../Buttons/ButtonContainer';
+import { Button, ButtonContainer } from '../components';
 
 const Header = () => {
   const navigate = useNavigate();

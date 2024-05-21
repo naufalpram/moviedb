@@ -1,5 +1,4 @@
-import Button from "../../../components/Buttons/Button"
-import ButtonContainer from "../../../components/Buttons/ButtonContainer"
+import { Button, ButtonContainer } from "../../../components"
 
 const TrendingHeader = ({ onSelect, timeWindow }) => (
     <div className='flex gap-4'>

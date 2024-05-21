@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import TrendingCarousel from '../../components/CardContainer'
-import { useFetch } from '../../hooks/useFetch';
-import Card from '../../components/Card/Card';
+import { CardContainer, ContainerSkeleton, Card } from '../../components'
 import TrendingHeader from './_components/TrendingHeader';
-import TrendingSkeleton from '../../components/CardContainer/ContainerSkeleton';
+import { useFetch } from '../../hooks/useFetch';
 
 const Trending = () => {
   const [timeWindow, setTimeWindow] = useState("day");
@@ -28,8 +26,8 @@ const Trending = () => {
 
   return (
     <section id='trending' className='mt-28 flex w-full'>
-        <TrendingCarousel header={<TrendingHeader onSelect={handleSelectMenu} timeWindow={timeWindow} />}>
-            {loading && <TrendingSkeleton length={6} isWithTitle={true} />}
+        <CardContainer header={<TrendingHeader onSelect={handleSelectMenu} timeWindow={timeWindow} />}>
+            {loading && <ContainerSkeleton length={6} isWithTitle={true} />}
             {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
 
             {status === 'resolved' && data?.map(media => {
@@ -42,7 +40,7 @@ const Trending = () => {
                             title={title}
                         />
             })}
-        </TrendingCarousel>
+        </CardContainer>
     </section>
   )
 }

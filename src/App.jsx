@@ -1,8 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './components/Layout';
-import List from './pages/List';
-import Home from './pages/Home';
-import Detail from './pages/Detail'
+import Layout from './layout';
+import { Home, List, Detail } from './pages';
 import { AuthProvider } from './store/auth';
 import { SearchProvider } from './store/search';
 
