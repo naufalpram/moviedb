@@ -10,15 +10,15 @@ const EmptyImage = () => (
   </div>
 )
 
-const Card = ({ path, mediaType, imagePath, title, date}) => {
+const Card = ({ path, imagePath, title, date}) => {
   const navigate = useNavigate(); 
   return (
-    <div className={`flex flex-col gap-4 items-center min-w-52 ${title && date && 'justify-between'}`} onClick={() => navigate(`${mediaType}/${path}`)}>
+    <div className={`flex flex-col gap-4 items-center min-w-52 ${title && date && 'justify-between'}`} onClick={() => navigate(path)}>
         {imagePath ? 
           <img src={`${IMAGE_FETCH_URL}${imagePath}`} alt="Movie Poster" className='w-52 h-auto rounded-md cursor-pointer' /> : 
           <EmptyImage />
         }
-        {title && <p className='m-0 font-semibold max-w-48 hover:text-secondary-200 cursor-pointer' onClick={() => navigate(`${mediaType}/${path}`)}>{title}</p>}
+        {title && <p className='m-0 font-semibold max-w-48 hover:text-secondary-200 cursor-pointer' onClick={() => navigate(path)}>{title}</p>}
         {date && <p className='text-sm font-semibold max-w-48 text-unselect-gray'>{date}</p>}
     </div>
   )

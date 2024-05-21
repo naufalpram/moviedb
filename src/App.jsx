@@ -17,16 +17,11 @@ const router = createBrowserRouter([
       },
       {
         path: ':mediaType',
-        children: [
-          {
-            index: true,
-            element: <Detail />
-          },
-          {
-            path: ':idName',
-            element: <Detail />
-          }
-        ]
+        element: <List />
+      },
+      {
+        path: ':mediaType/:idName',
+        element: <Detail />
       }
     ]
   }

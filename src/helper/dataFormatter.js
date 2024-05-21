@@ -11,4 +11,12 @@ const runtimeFormatter = (runtime) => {
     return `${hour}h ${minute}m`;
 }
 
-export { dateFormatter, runtimeFormatter }
+const episodeFormatter = (season, episode) => {
+    return `S${season} E${episode}`;
+}
+
+function crewNameFormatter(name, idx, group) {
+    return `${name}${idx < group.length-1 ? ',': ''}`
+}
+
+export { dateFormatter, runtimeFormatter, episodeFormatter, crewNameFormatter }

@@ -15,7 +15,6 @@ const DetailData = ({ mediaType, id, setBackdrop }) => {
   useEffect(() => {
     fetchData();
   }, [mediaType, id]);
-  console.log(data);
 
   useEffect(() => {
     setBackdrop(data?.backdrop_path);
@@ -27,7 +26,7 @@ const DetailData = ({ mediaType, id, setBackdrop }) => {
           <BasicInfo result={{
                 data, loading, error, status
           }} />
-          <div className='bg-white flex flex-col items-center'>
+          <div className='flex-col items-center'>
             <img src={`${IMAGE_FETCH_URL}${data?.poster_path}`} alt="Poster Image" className='w-80 h-auto' />
           </div>
         </div>

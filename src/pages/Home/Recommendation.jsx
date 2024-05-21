@@ -26,11 +26,10 @@ const Recommendation = () => {
                 {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
                 {status === 'resolved' && data?.map(media => {
                     const title = media.title || media.name;
-                    const path = `${media.id}-${title.split(' ').join('-')}`;
+                    const identifier = `${media.id}-${title.split(' ').join('-')}`;
                     return <Card 
-                                key={`${media.id}-${title.split(' ').join('-')}`}
-                                path={path}
-                                mediaType={media.media_type}
+                                key={identifier}
+                                path={`/${media.media_type}/${identifier}`}
                                 imagePath={media.poster_path} 
                                 title={title}
                             />

@@ -26,11 +26,10 @@ const Result = ({ mediaType, category, latestPage }) => {
 
             {status === 'resolved' && data?.map(media => {
                 const title = media.title || media.name;
-                const path = `${media.id}-${title.split(' ').join('-')}`
+                const identifier = `${media.id}-${title.split(' ').join('-')}`
                 return <Card 
-                            key={path}
-                            path={path}
-                            mediaType={media.media_type}
+                            key={identifier}
+                            path={identifier}
                             imagePath={media.poster_path || media.profile_path} 
                             title={title}
                             date={media.release_date || media.first_air_date}

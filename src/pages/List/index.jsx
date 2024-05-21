@@ -10,7 +10,7 @@ const List = () => {
   const { mediaType } = useParams();
   const [media, setMedia] = useState({
     mediaType,
-    category: MEDIA_MENU[mediaType].menu[0].path
+    category: MEDIA_MENU[mediaType]?.menu[0].path
   })
   const [latestPage, setLatestPage] = useState(1);
   const { searchQuery, handleQueryChange } = useSearch();
