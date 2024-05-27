@@ -9,10 +9,6 @@ const ListHead = ({ type = 'movies', onMenuSelect, currentSelected }) => {
   const placeholder = `Search a ${type === 'tv' ? 'tv series' : type}`;
   const { queryParams } = useQuery();
 
-  function handleSearch(value) {
-    onSearchSubmit(prevValue => ({...prevValue, ...value}));
-  }
-
   return (
     <section className='mt-24 w-full'>
       <div className='mx-24 flex justify-between'>
@@ -31,7 +27,7 @@ const ListHead = ({ type = 'movies', onMenuSelect, currentSelected }) => {
           </ButtonContainer>
         </div>
         <div className='self-end w-1/2'>
-          <SearchInput placeholder={placeholder} onSearch={handleSearch} />
+          <SearchInput placeholder={placeholder} />
         </div>
       </div>
     </section>

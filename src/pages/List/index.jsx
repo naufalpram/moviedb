@@ -23,7 +23,6 @@ const List = ({ title }) => {
       mediaType,
       category: MEDIA_MENU[mediaType].menu[0].path
     })
-    handleQueryChange({query: null})
   }, [mediaType])
   
   function handleMenuSelect(value) {
