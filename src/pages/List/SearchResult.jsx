@@ -5,7 +5,7 @@ import { useQuery } from '../../hooks/useQuery';
 
 const SearchResult = ({ mediaType }) => {
   const { queryParams } = useQuery();
-  const {data, loading, error, status, params, setParams} = useFetch(
+  const {data, loading, error, status, setParams} = useFetch(
     `/search/${mediaType}`,
     {
       page: 1,
@@ -24,7 +24,7 @@ const SearchResult = ({ mediaType }) => {
     <section id='search-result' className='mt-12 flex w-full'>
         <CardContainer wrap>
             {loading && <ContainerSkeleton length={12} isWithTitle={true} />}
-            {error && <p className='font-medium text-lg'>Something wrong while getting trending movies and tv series {":("}</p>}
+            {error && <p className='font-medium text-lg'>Something wrong while getting your search {":("}</p>}
 
             {status === 'resolved' && data?.map(media => {
                 const title = media.title || media.name;

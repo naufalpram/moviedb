@@ -4,10 +4,15 @@ import Trending from './Trending';
 import Recommendation from './Recommendation';
 import HomeFavorite from './HomeFavorite';
 import { useAuth } from '../../hooks/useAuth';
+import { useQuery } from '../../hooks/useQuery';
 
 const Home = ({ title }) => {
   document.title = title;
   const { isLoggedIn } = useAuth();
+  const { handleQueryChange } = useQuery();
+  useEffect(() => {
+    handleQueryChange({query: null});
+  }, []);
 
   return (
     <main className='w-[100vw]'>
