@@ -1,5 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { createContext, useCallback, useState } from "react";
 
 const QueryContext = createContext({
     queryParams: {

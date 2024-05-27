@@ -3,8 +3,9 @@ import Layout from './layout';
 // import { Home, List, Detail } from './pages';
 import { AuthProvider } from './store/auth';
 import { QueryProvider } from './store/query';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import routes from './config/route';
+import { useQuery } from './hooks/useQuery';
 
 const LoadingPage = () => {
   return <div className='w-[100vw] h-[100vh] bg-base text-white font-semibold flex items-center justify-center'>Loading...</div>

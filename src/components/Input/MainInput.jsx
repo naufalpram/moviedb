@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { useQuery } from '../../hooks/useQuery';
 
-const MainInput = ({ placeholder, onSearch }) => {
+const MainInput = ({ placeholder }) => {
   const inputRef = useRef();
   const { handleQueryChange } = useQuery();
   return (
