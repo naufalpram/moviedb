@@ -21,6 +21,7 @@ function castCrewReducer(state, action) {
 
 const CastCrew = () => {
   const { mediaType, idName } = useParams();
+  const creditType = mediaType === 'person' ? 'combined_credits' : 'credits'
   const [members, dispatch] = useReducer(castCrewReducer, {
     casts: [],
     directors: [],
@@ -29,7 +30,7 @@ const CastCrew = () => {
     editors: []
   });
   const {data, loading, error, status, fetchData} = useFetch(
-    `${mediaType}/${idName?.split('-')[0]}/credits`,
+    `${mediaType}/${idName?.split('-')[0]}/${creditType}`,
     {},
     useCallback((data) => ({
         data

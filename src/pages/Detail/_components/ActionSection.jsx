@@ -10,18 +10,20 @@ function onClickUrl(url) {
     }
 }
 
-const ActionSection = ({ poster, homepageUrl }) => {
+const ActionSection = ({ poster, homepageUrl, type }) => {
   return (
     <div className='flex flex-col items-center'>
         <img src={`${IMAGE_FETCH_URL}${poster}`} alt="Poster Image" className='w-40 md:w-60 lg:w-80 h-auto' />
-        <ButtonContainer display='flex flex-col gap-3 mt-6'>
-            <Button variant='secondary' onClick={() => onClickUrl(homepageUrl)} icon={<IoMdOpen style={{width: '20px', height: '20px'}} />}>
-            Visit Page
-            </Button>
-            <Button variant='primary'>
-            Add to Favorite
-            </Button>
-        </ButtonContainer>
+        {type !== 'person' && 
+          <ButtonContainer display='flex flex-col gap-3 mt-6'>
+              <Button variant='secondary' onClick={() => onClickUrl(homepageUrl)} icon={<IoMdOpen style={{width: '20px', height: '20px'}} />}>
+              Visit Page
+              </Button>
+              <Button variant='primary'>
+              Add to Favorite
+              </Button>
+          </ButtonContainer>
+        }
     </div>
   )
 }
