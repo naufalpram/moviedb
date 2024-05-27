@@ -34,20 +34,10 @@ const ReviewContent = ({ children }) => {
 }
 
 
-const Review = ({ mediaType, id }) => {
+const Review = ({ result }) => {
+  const { data, loading, error, status} = result;
   const isLoggedIn = getIsLogin();
   const reviewRef = useRef();
-  const {data, loading, error, status, fetchData} = useFetch(
-    `${mediaType}/${id}/reviews`,
-    {},
-    useCallback((data) => ({
-        data: data?.results
-    }), [])
-  );
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   function handleSubmit(review) {
     if (!isLoggedIn) {
@@ -58,8 +48,8 @@ const Review = ({ mediaType, id }) => {
   }
 
   return (
-    <section id='media-review' className='mt-12 w-full'>
-        <div className='mx-28'>
+    <section id='media-review' className='mt-20 w-full flex justify-center'>
+        <div className='mx-28 flex flex-col items-center'>
             <h2 className='font-bold text-3xl'>Reviews</h2>
             <div className='flex flex-col w-80 md:w-[640px] lg:w-[780px] gap-2'>
                 <BigInput ref={reviewRef} name='review' placeholder='Write your own review!' display='mt-4 resize-none w-full border border-white rounded p-4' />
@@ -67,20 +57,19 @@ const Review = ({ mediaType, id }) => {
                     <Button disabled={!isLoggedIn} variant={!isLoggedIn ? 'unselect' : 'secondary'} onClick={() => handleSubmit(reviewRef.current.value)}>Submit</Button>
                 </ButtonContainer>
             </div>
-            <ul className='w-full'>
+            <div className='w-fit flex flex-col items-center'>
                 {loading && <ReviewSkeleton />}
                 {status === 'resolved' && data?.map( review => (
-                <li key={review?.id} className='list-none'>
-                    <div className='mt-6 w-2/3 p-4 border-t-2 border-unselect-gray'>
+                    <div key={review.id} className='mt-6 w-2/3 p-4 border-t-2 border-unselect-gray'>
                         <p className='w-1/2 text-lg font-semibold'>{review?.author}</p>
                         <p className='text-unselect-gray font-medium'>Written at {dateFormatter(review?.created_at)}</p>
                         <ReviewContent>
                             {review?.content}
                         </ReviewContent>
                     </div>
-                </li>)
+                  )
                 )}
-            </ul>
+            </div>
         </div>
     </section>
   )

@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useReducer } from 'react'
-import { useFetch } from '../../../../hooks/useFetch'
-import { useParams } from 'react-router-dom';
-import { crewNameFormatter } from '../../../../helper/dataFormatter';
+import React, { useEffect, useReducer } from 'react'
+import { crewNameFormatter } from '../../../../helper/dataFormatter'
 
 function castCrewReducer(state, action) {
     switch (action.type) {
@@ -19,9 +17,7 @@ function castCrewReducer(state, action) {
     }
 }
 
-const CastCrew = () => {
-  const { mediaType, idName } = useParams();
-  const creditType = mediaType === 'person' ? 'combined_credits' : 'credits'
+const CastCrew = ({ data, loading, status }) => {
   const [members, dispatch] = useReducer(castCrewReducer, {
     casts: [],
     directors: [],
@@ -29,17 +25,6 @@ const CastCrew = () => {
     producers: [],
     editors: []
   });
-  const {data, loading, error, status, fetchData} = useFetch(
-    `${mediaType}/${idName?.split('-')[0]}/${creditType}`,
-    {},
-    useCallback((data) => ({
-        data
-    }), [])
-  );
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (data) {
@@ -50,6 +35,7 @@ const CastCrew = () => {
         
     }
   }, [data]);
+
   return (
     <div className='flex gap-40 mt-16'>
         <div>
@@ -106,4 +92,5 @@ const NameSkeleton = ({ length }) => {
         </div>
     )
 }
+
 export default CastCrew
