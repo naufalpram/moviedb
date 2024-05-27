@@ -4,16 +4,26 @@ import { FaStar } from 'react-icons/fa';
 import Credit from '../Credit';
 import InfoSkeleton from '../InfoSkeleton';
 
+function configureDate(data) {
+  return data?.release_date || data?.first_air_date ? dateFormatter(data?.release_date || data?.first_air_date) : null
+}
+
+function configureRuntime(data) {
+  if (data?.runtime) return runtimeFormatter(data.runtime);
+  if (data?.number_of_seasons && data?.number_of_episodes) return episodeFormatter(data?.number_of_seasons, data?.number_of_episodes);
+  return null;
+}
+
 const InfoResult = ({ data }) => {
-  const formattedDate = dateFormatter(data?.release_date || data?.first_air_date);
-  const formattedRuntime = data?.runtime ? runtimeFormatter(data.runtime) : episodeFormatter(data?.number_of_seasons, data?.number_of_episodes);
+  const formattedDate = configureDate(data);
+  const formattedRuntime = configureRuntime(data);
   return (
     <>
       {data?.tagline && data?.tagline.trim() !== '' && <p className='italic text-secondary-400 font-normal text-[28px]'>"{data?.tagline}"</p>}
       <h1 className='font-bold text-[40px] font-title uppercase text-white tracking-widest'>{data?.title || data?.name}</h1>
       <div className='flex gap-5'>
-        <p className='text-unselect-gray text-xl font-semibold py-1'>{formattedDate}</p>
-        <p className='border border-secondary-400 py-1 px-2 text-center font-semibold'>{formattedRuntime}</p>
+        <p className='text-unselect-gray text-xl font-semibold py-1'>{formattedDate ?? 'No Date'}</p>
+        <p className='border border-secondary-400 py-1 px-2 text-center font-semibold'>{formattedRuntime ?? 'No Runtime'}</p>
         {data?.genres?.map(genre => <p key={genre.id} className='bg-primary-400 py-1 px-2 text-center font-semibold'>{genre.name}</p>)}
         <div className='flex gap-2 items-center'>
           <FaStar className='h-full w-8' style={{color: '#FFC300'}} />

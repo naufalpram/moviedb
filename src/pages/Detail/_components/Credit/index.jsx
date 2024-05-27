@@ -3,8 +3,9 @@ import KnownFor from './KnownFor';
 import CastCrew from './CastCrew';
 
 const Credit = ({ creditData, mediaType, ...otherResult }) => {
+  const Component = mediaType === 'person' ? KnownFor : CastCrew;
   return (
-    mediaType === 'person' ? <KnownFor /> : <CastCrew data={creditData} loading={otherResult.loading} status={otherResult.status} />
+    <Component data={creditData} loading={otherResult.loading} status={otherResult.status} />
   )
 }
 

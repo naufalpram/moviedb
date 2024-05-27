@@ -5,7 +5,7 @@ import DetailData from './DetailData';
 import Review from './Review';
 import { useQuery } from '../../hooks/useQuery';
 import { useFetch } from '../../hooks/useFetch';
-import DetailRecommendation from './DetailRecommendation';
+import MediaList from './MediaList';
 
 const index = ({ title }) => {
   document.title = title;
@@ -43,17 +43,16 @@ const index = ({ title }) => {
         <DetailData id={id} mediaType={mediaType} result={{
           data, loading, error, status
         }} />
+        
+        <MediaList parentType={mediaType} result={{
+          data: mediaType === 'person' ? data?.combined_credits?.cast : data?.recommendations?.results,
+          loading, error, status
+        }} />
         {mediaType !== 'person' && 
-          <>
-            <DetailRecommendation result={{
-              data: data?.recommendations?.results?.slice(0, 5),
-              loading, error, status
-            }} />
             <Review result={{
               data: data?.reviews?.results,
               loading, error, status
             }}/>
-          </>
         }
     </main>
   )

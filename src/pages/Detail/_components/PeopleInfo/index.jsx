@@ -8,7 +8,7 @@ import InfoSkeleton from '../InfoSkeleton';
 const GENDER = ['Not Specified', 'Female', 'Male', 'Non-binary'];
 
 const InfoResult = ({ data }) => {
-    const formattedBirthDate = dateFormatter(data?.birthday);
+    const formattedBirthDate = data?.birthday ? dateFormatter(data?.birthday): null;
     const formattedDeathDate = data?.deathday ? dateFormatter(data?.deathday) : null;
     const aliases = data?.also_known_as?.reduce((acc, curr, idx) => {
         if (idx === data?.also_known_as.length - 1) acc += curr;
@@ -28,7 +28,7 @@ const InfoResult = ({ data }) => {
           </div>
         </div>
         <p className='mt-5 font-semibold text-xl'>{data?.biography}</p>
-        <p className='mt-4 font-light'><span className='font-semibold'>Also Known As:</span> {aliases}</p>
+        {data?.also_known_as?.length > 0 && <p className='mt-4 font-light'><span className='font-semibold'>Also Known As:</span> {aliases}</p>}
         </>
     )
 }
