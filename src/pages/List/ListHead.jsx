@@ -1,24 +1,29 @@
 import React from 'react'
 import { ButtonContainer, Button, Input as SearchInput } from '../../components';
 import { MEDIA_MENU } from '../../config';
-import { useSearch } from '../../hooks/useSearch';
+import { useQuery } from '../../hooks/useQuery';
 
 
 const ListHead = ({ type = 'movies', onMenuSelect, currentSelected }) => {
   const variant = MEDIA_MENU[type];
-  const { searchQuery } = useSearch();
+  const placeholder = `Search a ${type === 'tv' ? 'tv series' : type}`;
+  const { queryParams } = useQuery();
+
+  function handleSearch(value) {
+    onSearchSubmit(prevValue => ({...prevValue, ...value}));
+  }
 
   return (
     <section className='mt-24 w-full'>
       <div className='mx-24 flex justify-between'>
         <div>
-          <h1 className='text-[40px] font-semibold'>Find {variant.title}{searchQuery.keyword && `: ${searchQuery.keyword}`}</h1>
+          <h1 className='text-[40px] font-semibold'>Find {variant.title}{queryParams?.query && `: ${queryParams.query}`}</h1>
           <ButtonContainer display='flex gap-4 mt-4'>
             {variant.menu.map(option => 
               <Button 
                 key={option.name}
                 onClick={() => onMenuSelect(option.path)}
-                variant={!searchQuery.keyword && currentSelected === option.path ? 'secondary' : 'unselect'}
+                variant={!queryParams.query && currentSelected === option.path ? 'secondary' : 'unselect'}
               >
                 {option.name}
               </Button>
@@ -26,7 +31,7 @@ const ListHead = ({ type = 'movies', onMenuSelect, currentSelected }) => {
           </ButtonContainer>
         </div>
         <div className='self-end w-1/2'>
-          <SearchInput placeholder={`Search a ${type === 'tv' ? 'tv series' : type}`} />
+          <SearchInput placeholder={placeholder} onSearch={handleSearch} />
         </div>
       </div>
     </section>

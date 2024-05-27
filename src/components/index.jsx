@@ -4,4 +4,5 @@ export { default as Card } from './Card/Card';
 export { default as CardSkeleton } from './Card/CardSkeleton';
 export { default as CardContainer } from './CardContainer/CardContainer';
 export { default as ContainerSkeleton } from './CardContainer/ContainerSkeleton';
-export { default as Input } from './Input';
+export { default as Input } from './Input/MainInput';
+export { default as BigInput } from './Input/BigInput';

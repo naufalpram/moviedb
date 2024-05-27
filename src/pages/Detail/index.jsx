@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IMAGE_FETCH_URL } from '../../config';
 import DetailData from './DetailData';
+import Review from './Review';
 
-const index = () => {
+const index = ({ title }) => {
+  document.title = title;
   const { mediaType, idName } = useParams();
   const [backdropPath, setBackdropPath] = useState(null);
 
@@ -14,6 +16,7 @@ const index = () => {
             <img src={`${IMAGE_FETCH_URL}${backdropPath}`} alt="Backrop Image" className='w-full h-full object-cover' />
         </div>
         <DetailData id={idName.split('-')[0]} mediaType={mediaType} setBackdrop={setBackdropPath}  />
+        <Review id={idName.split('-')[0]} mediaType={mediaType} />
     </main>
   )
 }

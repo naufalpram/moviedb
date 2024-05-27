@@ -5,7 +5,8 @@ import Recommendation from './Recommendation';
 import HomeFavorite from './HomeFavorite';
 import { useAuth } from '../../hooks/useAuth';
 
-const Home = () => {
+const Home = ({ title }) => {
+  document.title = title;
   const { isLoggedIn } = useAuth();
 
   return (

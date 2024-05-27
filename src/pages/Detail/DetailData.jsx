@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import BasicInfo from './_components/BasicInfo';
 import { useFetch } from '../../hooks/useFetch';
-import { IMAGE_FETCH_URL } from '../../config';
-import { IoMdOpen } from 'react-icons/io';
-import { Button, ButtonContainer } from '../../components';
+import ActionSection from './_components/ActionSection';
 
 const DetailData = ({ mediaType, id, setBackdrop }) => {
   const {data, loading, error, status, fetchData} = useFetch(
@@ -23,22 +21,12 @@ const DetailData = ({ mediaType, id, setBackdrop }) => {
   }, [data]);
 
   return (
-    <section id='detail-data' className='mt-12 w-full mx-28'>
-        <div className='w-full flex gap-40'>
+    <section id='detail-data' className='mt-12 w-full'>
+        <div className='flex mobile:flex-col-reverse sm:flex-col-reverse md:flex-row justify-between mx-28'>
           <BasicInfo result={{
                 data, loading, error, status
           }} />
-          <div className='flex flex-col items-center'>
-            <img src={`${IMAGE_FETCH_URL}${data?.poster_path}`} alt="Poster Image" className='w-80 h-auto' />
-            <ButtonContainer display='flex flex-col gap-2'>
-              <Button variant='secondary' icon={<IoMdOpen style={{width: '24px', height: '24px'}} />}>
-                Visit Page
-              </Button>
-              <Button variant='primary'>
-                Add to Favorite
-              </Button>
-            </ButtonContainer>
-          </div>
+          <ActionSection poster={data?.poster_path} homepageUrl={data?.homepage} />
         </div>
     </section>
   )

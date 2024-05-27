@@ -5,14 +5,15 @@ const styles = {
     secondary: "bg-secondary-400",
     ternaryBlue: "border-2 border-primary-400 bg-transparent",
     ternaryYellow: "border border-secondary-400 bg-transparent",
-    unselect: "bg-unselect-gray/20 text-white/20 border-[0.5px] border-white/20"
+    unselect: "bg-unselect-gray/20 text-white/20 border-[0.5px] border-white/20",
 }
 
-const Button = ({ variant = "primary", onClick, icon, children }) => {
+const Button = ({ variant = "primary", onClick, icon, children, ...props }) => {
   return (
     <button 
-        className={`flex gap-1 px-6 py-2 rounded-[20px] text-sm font-medium cursor-pointer transition-all ${styles[variant]}`}
+        className={`flex gap-1 px-7 py-3 min-h-8 rounded-[20px] text-sm font-medium transition-all ${styles[variant]} ${!props.disabled ? 'cursor-pinter': ''}`}
         onClick={onClick}
+        {...props}
     >
         {children}
         {icon && <span className='w-4 h-4'>{icon}</span>}

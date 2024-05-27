@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useReducer } from 'react'
 import { useFetch } from '../../../../hooks/useFetch'
 import { useParams } from 'react-router-dom';
-import Crew from './Crew';
-import NameSkeleton from './NameSkeleton';
+import { crewNameFormatter } from '../../../../helper/dataFormatter';
 
 function castCrewReducer(state, action) {
     switch (action.type) {
         case 'ASSIGN_MEMBERS':
             return {
                 ...state,
-                casts: action.payload.cast.slice(0,5),
+                casts: action.payload.cast.slice(0,6),
                 directors: action.payload.crew.filter(member => member.job === 'Director'),
                 writers: action.payload.crew.filter(member => member.department === 'Writing' && member.job === 'Screenplay'),
                 producers: action.payload.crew.filter(member => member.job === 'Producer').slice(0,4),
@@ -86,4 +85,24 @@ const CastCrew = () => {
   )
 }
 
+const Crew = ({ title, children }) => {
+    return (
+        <>
+            <div className='flex gap-2'>
+                <span className='font-bold'>{title}</span>
+                {children?.map((member, idx) => <span key={member.id} className='font-light'>{crewNameFormatter(member.name, idx, children)}</span>)}
+            </div>
+        </>
+    )
+}
+
+const NameSkeleton = ({ length }) => {
+    return (
+        <div className='flex flex-col gap-2'>
+            {Array.from({ length: length }, (_, i) => (
+                <div key={i} className='bg-gray-500 w-48 h-5 animate-pulse'></div>
+            ))}
+        </div>
+    )
+}
 export default CastCrew

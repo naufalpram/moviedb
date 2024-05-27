@@ -1,6 +1,9 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
+import qs from 'querystring';
 import service from '../service';
 import { API_KEY } from '../config';
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from './useQuery';
 
 const initialState = {
     data: null,
@@ -38,26 +41,48 @@ function stateReducer(state, action) {
     }
 }
 
+const defaultConfig = {
+    withQueryParams: false
+};
+
 // dataMapper must return object with property "data"
-export const useFetch = (url, queryParams, dataMapper, forImage = false) => {
+export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}, forImage = false) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const config = {...defaultConfig, ...configArgs}
+    const { queryParams } = useQuery();
+    const urlParams = new URLSearchParams(location.search);
+    const [params, setParams] = useState(
+        Object.keys(urlParams).length ? {...urlParams, ...paramsArgs, ...queryParams} : {...paramsArgs, ...queryParams}
+    );
     const [state, dispatch] = useReducer(stateReducer, initialState);
+
+    const pushParamsToHistory = useCallback(() => {
+        const { page, ...publicParams } = params;
+        const filteredParams = Object.entries(publicParams).filter(([, value]) => value !== null);
+        navigate({ search: createSearchParams(filteredParams).toString() });
+    }, [params, navigate]);
     
     const fetchData = useCallback(() => {
         dispatch({type: "CALL_REQUEST"});
         service.get(url, {
             params: {
-                ...queryParams,
+                ...params,
                 language: !forImage ? "en-US" : null,
                 api_key: API_KEY
             }
         })
         .then(({ data }) => {
             dispatch({type: "CALL_REQUEST_SUCCESS", payload: dataMapper(data)});
+            if (config.withQueryParams) pushParamsToHistory();
         })
         .catch(error => {
             dispatch({type: "CALL_REQUEST_FAILURE", payload: {error}});
         }) 
-    }, [url, queryParams, dataMapper]);
+    }, [config.withQueryParams, url, params, pushParamsToHistory, dataMapper]);
 
-    return {...state, params: queryParams, fetchData};
+    useEffect(() => {
+        fetchData();
+    }, [params]);
+    return {...state, params, setParams, fetchData};
 }

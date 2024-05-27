@@ -1,24 +1,24 @@
 import React, { useCallback, useEffect } from 'react';
 import { CardContainer, ContainerSkeleton, Card } from '../../components';
 import { useFetch } from '../../hooks/useFetch';
+import { useQuery } from '../../hooks/useQuery';
 
-const SearchResult = ({ mediaType, query }) => {
-  const {data, loading, error, status, fetchData} = useFetch(
+const SearchResult = ({ mediaType }) => {
+  const { queryParams } = useQuery();
+  const {data, loading, error, status, params, setParams} = useFetch(
     `/search/${mediaType}`,
     {
       page: 1,
-      query: query.keyword
     },
     useCallback((data) => ({
       data: data?.results
-    }), [])
+    }), []),
+    {withQueryParams: true}
   );
 
   useEffect(() => {
-    if (query.keyword && query.keyword.trim() !== '') {
-        fetchData();
-    }
-  }, [query]);
+    setParams(prevParams => ({...prevParams, ...queryParams}));
+  }, [queryParams]);
 
   return (
     <section id='search-result' className='mt-12 flex w-full'>

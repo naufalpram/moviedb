@@ -4,11 +4,11 @@ import Header from './Header';
 import Footer from './Footer';
 
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <div className='overflow-x-hidden'>
         <Header />
-        <Outlet />
+        {children}
         <Footer />
     </div>
   )

@@ -1,19 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import ListHead from './ListHead'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { MEDIA_MENU } from '../../config';
 import Result from './Result';
 import SearchResult from './SearchResult';
-import { useSearch } from '../../hooks/useSearch';
+import { useQuery } from '../../hooks/useQuery';
 
-const List = () => {
+const List = ({ title }) => {
+  document.title = title
+  const navigate = useNavigate();
   const { mediaType } = useParams();
   const [media, setMedia] = useState({
     mediaType,
     category: MEDIA_MENU[mediaType]?.menu[0].path
   })
   const [latestPage, setLatestPage] = useState(1);
-  const { searchQuery, handleQueryChange } = useSearch();
+  const { queryParams, handleQueryChange } = useQuery();
 
   // for mediatype change in params
   useEffect(() => {
@@ -21,11 +23,11 @@ const List = () => {
       mediaType,
       category: MEDIA_MENU[mediaType].menu[0].path
     })
-    handleQueryChange({keyword: null})
+    handleQueryChange({query: null})
   }, [mediaType])
   
   function handleMenuSelect(value) {
-    handleQueryChange({keyword: null});
+    handleQueryChange({query: null});
     setMedia(prevMedia => ({
       ...prevMedia,
       category: value
@@ -35,8 +37,8 @@ const List = () => {
   return (
     <main className='w-[100vw]'>
       <ListHead type={media.mediaType} onMenuSelect={handleMenuSelect} currentSelected={media.category} />
-      {searchQuery && searchQuery.keyword && searchQuery.keyword !== '' ? 
-        <SearchResult query={searchQuery} mediaType={media.mediaType} /> : 
+      {(queryParams.query && queryParams.query !== '') || location.search ? 
+        <SearchResult mediaType={media.mediaType} /> : 
         <Result {...media} latestPage={latestPage} />
       }
     </main>
