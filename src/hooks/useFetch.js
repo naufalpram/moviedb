@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
-import qs from 'querystring';
 import service from '../service';
-import { API_KEY } from '../config';
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from './useQuery';
+const { VITE_API_KEY: API_KEY } = import.meta.env;
 
 const initialState = {
     data: null,

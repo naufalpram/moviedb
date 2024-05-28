@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import ListHead from './ListHead'
 import { useNavigate, useParams } from 'react-router-dom'
-import { MEDIA_MENU } from '../../config';
+import { MEDIA_MENU } from '../../config/media';
 import Result from './Result';
 import SearchResult from './SearchResult';
 import { useQuery } from '../../hooks/useQuery';

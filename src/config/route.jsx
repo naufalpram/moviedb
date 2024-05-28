@@ -1,12 +1,11 @@
 import React from 'react';
-import { APP_NAME } from '.';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const List = React.lazy(() => import('../pages/List'));
 const Detail = React.lazy(() => import('../pages/Detail'));
 const Discover = React.lazy(() => import('../pages/Discover'));
 
-const GenerateTitle = (name) => (`${name} | ${APP_NAME}`);
+const GenerateTitle = (name) => (`${name} | ${import.meta.env.VITE_NAME}`);
 
 const privateRoutes = [
     { exact: true, path: '/', name: GenerateTitle('Home'), component: Home },

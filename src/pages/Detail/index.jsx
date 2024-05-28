@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { IMAGE_FETCH_URL } from '../../config';
 import DetailData from './DetailData';
 import Review from './Review';
 import { useQuery } from '../../hooks/useQuery';
 import { useFetch } from '../../hooks/useFetch';
 import MediaList from './MediaList';
+const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;
 
 const index = ({ title }) => {
   document.title = title;

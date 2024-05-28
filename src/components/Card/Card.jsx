@@ -1,7 +1,7 @@
-import React from 'react'
-import { IMAGE_FETCH_URL } from '../../config';
+import React from 'react';
 import { MdErrorOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;
 
 const EmptyImage = () => (
   <div className='flex flex-col justify-center items-center w-52 h-80 bg-gray-400 text-black font-medium rounded-md'>

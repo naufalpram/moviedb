@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, IMAGE_FETCH_URL } from "../config";
+const { VITE_API_URL: BASE_URL } = import.meta.env;
 
 const instance = axios.create();
 
