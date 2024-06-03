@@ -46,6 +46,7 @@ const defaultConfig = {
 
 // dataMapper must return object with property "data"
 export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}) => {
+    console.log(API_KEY);
     const navigate = useNavigate();
     const location = useLocation();
     const config = {...defaultConfig, ...configArgs}
