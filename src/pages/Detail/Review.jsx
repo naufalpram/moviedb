@@ -35,7 +35,7 @@ const ReviewContent = ({ children }) => {
 
 
 const Review = ({ result }) => {
-  const { data, loading, error, status} = result;
+  const { data, loading, status} = result;
   const isLoggedIn = getIsLogin();
   const reviewRef = useRef();
 
@@ -60,8 +60,8 @@ const Review = ({ result }) => {
             <div className='w-full flex flex-col items-center'>
                 {loading && <ReviewSkeleton />}
                 {status === 'resolved' && data?.map( review => (
-                    <div key={review.id} className='mt-6 w-full p-4 border-t-2 border-unselect-gray'>
-                        <p className='w-1/2 text-lg font-semibold'>{review?.author}</p>
+                    <div key={review.id} className='mt-6 w-full max-w-[1024px] p-4 border-t-2 border-unselect-gray'>
+                        <p className='text-lg font-semibold'>{review?.author}</p>
                         <p className='text-unselect-gray font-medium'>Written at {dateFormatter(review?.created_at)}</p>
                         <ReviewContent>
                             {review?.content}

@@ -19,7 +19,7 @@ const saveToLocalStorage = (key, value) => {
 }
 
 const getIsLogin = () => {
-    return !!localStorage.getItem('user');
+    return !!localStorage.getItem('isLoggedIn');
 }
 
 const setLoginState = (username) => {

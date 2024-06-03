@@ -1,51 +1,94 @@
 import { createContext, useState, useEffect } from 'react'
-import axios from 'axios';
-import { getFromLocalStorage } from '../helper/localStorageHelper';
+import { getFromLocalStorage, getIsLogin, removeFromLocalStorage, saveToLocalStorage } from '../helper/localStorageHelper';
+import Services from '../service';
+import { useNavigate } from 'react-router-dom';
+const { VITE_API_KEY: API_KEY } = import.meta.env;
 
 const AuthContext = createContext({
     isLoggedIn: false,
-    setIsLoggedIn: () => {},
+    session: {},
     user: {},
-    setUser: () => {},
-    login: () => {},
+    loginAsGuest: () => {},
     logout: () => {}
 })
 
 const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(getFromLocalStorage('token') !== null);
-    const [user, setUser] = useState(JSON.parse(getFromLocalStorage('user')) || {});
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(!!getIsLogin());
+    const [session, setSession] = useState(JSON.parse(getFromLocalStorage('session')) || {
+        sessiondId: null,
+        type: null,
+        expiresAt: null
+    });
+    const [user, setUser] = useState(JSON.parse(getFromLocalStorage('user')) || {
+        email: null,
+        password: null
+    });
 
     useEffect(() => {
-      const token = localStorage.getItem('token');
-      setIsLoggedIn(token ? true : false);
-      setUser(JSON.parse(getFromLocalStorage('user')) || {});
+      setIsLoggedIn(!!getIsLogin());
+      setSession(JSON.parse(getFromLocalStorage('session')) || {
+        sessiondId: null,
+        type: null,
+        expiresAt: null
+      });
+      setUser(JSON.parse(getFromLocalStorage('user')) || {
+        email: null,
+        password: null
+      });
     }, [])
     
-    const login = (data) => {
-        axios.post('https://fakestoreapi.com/auth/login', data)
-        .then(response => {
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify({username : data.username}));
-    
-            setIsLoggedIn(true)
-            setUser({ username: data.username });
-        })
-        .catch(err => {
-            console.log(err);
-            alert("Username or Password is incorrect");
+    const loginAsGuest = ({ email, password }) => {
+        Services.get("/authentication/guest_session/new", {
+            headers: {
+              accept: "application/json",
+            },
+            params: {
+              api_key: API_KEY
+            }
+        }).then(({ data }) => {
+            const session = {
+                sessionId: data?.session_id,
+                type: "guest",
+                expiresAt: data?.expires_at
+            }
+            const user = {
+                email: email,
+                password: password
+            }
+            saveToLocalStorage("isLoggedIn", data?.success);
+            saveToLocalStorage("session", JSON.stringify(session));
+            saveToLocalStorage("user", JSON.stringify(user));
+            
+            setIsLoggedIn(data?.success);
+            setSession(session);
+            setUser(user);
+            navigate('/');
+        }).catch((e) => {
+            alert(e);
         })
     }
 
     const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        removeFromLocalStorage("isLoggedIn");
+        removeFromLocalStorage("session");
+        removeFromLocalStorage("user");
         setIsLoggedIn(false);
-        setUser({});
+        setSession({
+            sessiondId: null,
+            type: null,
+            expiresAt: null
+        });
+        setUser({
+            email: null,
+            password: null,
+        });
+        navigate('/');
     }
 
     return (
         <AuthContext.Provider value={{
-            isLoggedIn, setIsLoggedIn, user, setUser, login, logout
+            isLoggedIn, session, user, setUser, loginAsGuest, logout
         }}>
             {children}
         </AuthContext.Provider>

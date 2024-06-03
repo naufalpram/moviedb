@@ -45,7 +45,7 @@ const defaultConfig = {
 };
 
 // dataMapper must return object with property "data"
-export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}, forImage = false) => {
+export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const config = {...defaultConfig, ...configArgs}
@@ -67,7 +67,7 @@ export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}, forI
         service.get(url, {
             params: {
                 ...params,
-                language: !forImage ? "en-US" : null,
+                language: "en-US",
                 api_key: API_KEY
             }
         })
@@ -82,6 +82,6 @@ export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}, forI
 
     useEffect(() => {
         fetchData();
-    }, [params]);
+    }, [params, fetchData]);
     return {...state, params, setParams, fetchData};
 }

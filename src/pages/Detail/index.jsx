@@ -7,7 +7,7 @@ import { useFetch } from '../../hooks/useFetch';
 import MediaList from './MediaList';
 const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;
 
-const index = ({ title }) => {
+const Detail = ({ title }) => {
   document.title = title;
   const { handleQueryChange } = useQuery();
   const { mediaType, idName } = useParams();
@@ -24,11 +24,11 @@ const index = ({ title }) => {
 
   useEffect(() => {
     fetchData();
-  }, [mediaType, idName]);
+  }, [mediaType, idName, fetchData]);
 
   useEffect(() => {
     handleQueryChange({query: null});
-  }, []);
+  }, [handleQueryChange]);
 
   
 
@@ -58,4 +58,4 @@ const index = ({ title }) => {
   )
 }
 
-export default index
+export default Detail
