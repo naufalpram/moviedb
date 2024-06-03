@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   define: {
-    __VITE_NAME__: import.meta.env.VITE_NAME
+    __VITE_NAME__: process.env.VITE_NAME
   }
 })
