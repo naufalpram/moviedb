@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   define: {
-    __VITE_NAME__: process.env.VITE_NAME
+    VITE_NAME: process.env.VITE_NAME,
+    VITE_API_KEY: process.env.VITE_API_KEY,
+    VITE_API_URL: process.env.VITE_API_URL,
+    VITE_IMAGE_URL: process.env.VITE_IMAGE_URL,
   }
 })
