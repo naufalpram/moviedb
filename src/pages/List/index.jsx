@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import ListHead from './ListHead'
 import { useNavigate, useParams } from 'react-router-dom'
 import { MEDIA_MENU } from '../../config/media';

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { ButtonContainer, Button, Input as SearchInput } from '../../components';
 import { MEDIA_MENU } from '../../config/media';
 import { useQuery } from '../../hooks/useQuery';

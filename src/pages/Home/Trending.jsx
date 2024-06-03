@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CardContainer, ContainerSkeleton, Card } from '../../components'
 import TrendingHeader from './_components/TrendingHeader';
 import { useFetch } from '../../hooks/useFetch';

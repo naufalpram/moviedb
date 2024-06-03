@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { crewNameFormatter } from '../../../../helper/dataFormatter'
 
 function castCrewReducer(state, action) {

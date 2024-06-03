@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Input } from '../../components'
 import { useQuery } from '../../hooks/useQuery';
 import { createSearchParams, useNavigate } from 'react-router-dom';

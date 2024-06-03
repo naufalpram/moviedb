@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Input } from '../../components'
 import Result from './Result'
 import { useQuery } from '../../hooks/useQuery'

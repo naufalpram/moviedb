@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const KnownFor = ({ data, loading, status }) => {
   return (

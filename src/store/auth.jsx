@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import axios from 'axios';
 import { getFromLocalStorage } from '../helper/localStorageHelper';
 
@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
             setUser({ username: data.username });
         })
         .catch(err => {
+            console.log(err);
             alert("Username or Password is incorrect");
         })
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import CardSkeleton from '../Card/CardSkeleton'
 
 const ContainerSkeleton = ({ length, isWithTitle }) => {

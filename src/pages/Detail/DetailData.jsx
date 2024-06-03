@@ -1,4 +1,4 @@
-import React from 'react'
+
 import BasicInfo from './_components/BasicInfo';
 import ActionSection from './_components/ActionSection';
 import PeopleInfo from './_components/PeopleInfo';

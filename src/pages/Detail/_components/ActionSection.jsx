@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { IoMdOpen } from 'react-icons/io';
 import { ButtonContainer, Button } from '../../../components';
 const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;

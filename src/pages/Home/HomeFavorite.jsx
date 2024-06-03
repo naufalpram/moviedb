@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { CardContainer, ContainerSkeleton } from '../../components';
 import FavoriteHeader from './_components/FavoriteHeader';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { MdErrorOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;

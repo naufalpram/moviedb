@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { CardContainer, ContainerSkeleton, Card } from '../../components';
 import { useFetch } from '../../hooks/useFetch';
 

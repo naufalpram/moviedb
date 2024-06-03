@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { dateFormatter, episodeFormatter, runtimeFormatter } from '../../../../helper/dataFormatter';
 import { FaStar } from 'react-icons/fa';
 import Credit from '../Credit';

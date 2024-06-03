@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Card, CardContainer, ContainerSkeleton } from '../../components';
 
 function sortByPopularity(media = []) {

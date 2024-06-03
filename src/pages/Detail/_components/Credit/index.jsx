@@ -1,4 +1,4 @@
-import React from 'react';
+
 import KnownFor from './KnownFor';
 import CastCrew from './CastCrew';
 
