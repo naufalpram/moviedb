@@ -5,10 +5,6 @@ import { Button, ButtonContainer } from '../components';
 import { useAuth } from '../hooks/useAuth';
 import { IoMdPerson } from 'react-icons/io';
 
-function emailFormat(email) {
-  return email?.split("@")[0];
-}
-
 const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
   const navigate = useNavigate();
   const { isLoggedIn, user, logout } = useAuth();
@@ -29,7 +25,7 @@ const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
               </ButtonContainer>) : (
               <div className='flex items-center gap-4 relative'>
                 <IoMdPerson className='w-8 h-8' />
-                <p className='font-medium'>Hello, {emailFormat(user?.email)}</p>
+                <p className='font-medium'>Hello, {user?.username}</p>
                 <div
                   className={`w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent 
                     ${isLogoutCollapse ? 'border-b-8 border-b-secondary-200' : 'border-t-8 border-t-secondary-200'} cursor-pointer`}

@@ -13,26 +13,24 @@ const AuthInput = forwardRef(({ title, type, name, ...props }, ref) => {
 })
 
 const Login = () => {
-  const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
   const guestCheckRef = useRef();
-  const { loginAsGuest } = useAuth();
+  const { loginAsGuest ,login } = useAuth();
 
   function handleSubmit(e) {
     e.preventDefault();
     const isGuest = guestCheckRef.current.checked;
-    const email = emailRef.current.value;
+    const username = usernameRef.current.value;
     const password = passwordRef.current.value;
 
-    if (!(email && email.trim() !== '' && password && password.trim() !== '')) 
-      alert('Email and password must not be empty');
-
-    if (!(email.match("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$"))) 
-      alert('Email pattern is not valid');
+    if (!(username && username.trim() !== '' && password && password.trim() !== '')) 
+      alert('username and password must not be empty');
     
     if (password.length < 8) alert('Password must have at least 8 characters');
 
-    if (isGuest) loginAsGuest({ email: email, password: password });
+    if (isGuest) loginAsGuest({ username, password });
+    else login({ username, password })
   }
 
   return (
@@ -44,7 +42,7 @@ const Login = () => {
           <div className="w-2/3 border-gray-500 border rounded-md p-8">
             <h2 className="text-2xl font-bold text-center">Login</h2>
             <div className="flex flex-col gap-4 mt-6">
-              <AuthInput ref={emailRef} title="Email" type="email" name="email" placeholder="Type your email" required pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" />
+              <AuthInput ref={usernameRef} title="Username" type="username" name="username" placeholder="Type your username" required />
               <AuthInput ref={passwordRef} title="Password" type="password" name="password" placeholder="Type your password" required minLength={8} />
             </div>
             <ButtonContainer container="div" display="mt-8 flex justify-between">

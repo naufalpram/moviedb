@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { BigInput, Button, ButtonContainer } from '../../components';
-import { useFetch } from '../../hooks/useFetch';
 import { getIsLogin } from '../../helper/localStorageHelper';
 import { dateFormatter } from '../../helper/dataFormatter';
-import ReactMarkdown from 'react-markdown';
 import { Markup } from 'interweave';
 
 function sliceLongText(text = '') {
