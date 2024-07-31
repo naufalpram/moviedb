@@ -16,13 +16,13 @@ const Footer = () => {
                     <p className='font-bold text-lg'>Discover</p>
                 </li>
                 <li className='cursor-pointer list-none mt-3'>      
-                    <p className='cursor-pointer text-white/80' onClick={() => navigate('/movie')}>Movies</p>
+                    <button className='cursor-pointer text-white/80' onClick={() => navigate('/movie')}>Movies</button>
                 </li>
                 <li className='cursor-pointer list-none mt-3'>      
-                    <p className='cursor-pointer text-white/80' onClick={() => navigate('/tv')}>TV Series</p>
+                    <button className='cursor-pointer text-white/80' onClick={() => navigate('/tv')}>TV Series</button>
                 </li>
                 <li className='cursor-pointer list-none mt-3'>      
-                    <p className='cursor-pointer text-white/80' onClick={() => navigate('/person')}>People</p>
+                    <button className='cursor-pointer text-white/80' onClick={() => navigate('/person')}>People</button>
                 </li>
             </ul>
             <ul>

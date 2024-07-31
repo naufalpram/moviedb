@@ -56,8 +56,12 @@ const AuthProvider = ({ children }) => {
                 },
                 headers: {
                     accept: "application/json",
-                    Authorization: `Bearer ${API_KEY}`
-                  }
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZjhmNTg1Nzg4NWZjNzZkY2MxYmI0ZjhlYzhlMDYyNiIsInN1YiI6IjY2NDFjMjRjZWZiODBhNzVkMjk2NzMwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j0hMabHqAh-Up3mR72QbVq2WpLIn12UODuJPBlalU_0`,
+                    'content-type': "application/json"
+                  },
+                // params: {
+                //     api_key: "ef8f5857885fc76dcc1bb4f8ec8e0626"
+                // }
             }).then(({ data: loginValidation }) => {
                 console.log("2nd");
                 Services.post("/authentication/session/new", {
@@ -104,7 +108,7 @@ const AuthProvider = ({ children }) => {
             }
         }).then(({ data }) => {
             const session = {
-                sessionId: data?.session_id,
+                sessionId: data?.guest_session_id,
                 type: "guest",
                 expiresAt: data?.expires_at
             }
@@ -134,22 +138,23 @@ const AuthProvider = ({ children }) => {
                 params: {
                     api_key: API_KEY
                 }
-            }).then(() => {
-                removeFromLocalStorage("isLoggedIn");
-                removeFromLocalStorage("session");
-                removeFromLocalStorage("user");
-                setIsLoggedIn(false);
-                setSession({
-                    sessiondId: null,
-                    type: null,
-                    expiresAt: null
-                });
-                setUser({
-                    email: null,
-                    password: null,
-                });
-                navigate('/');
             })
+            // .then(() => {
+            //     removeFromLocalStorage("isLoggedIn");
+            //     removeFromLocalStorage("session");
+            //     removeFromLocalStorage("user");
+            //     setIsLoggedIn(false);
+            //     setSession({
+            //         sessiondId: null,
+            //         type: null,
+            //         expiresAt: null
+            //     });
+            //     setUser({
+            //         email: null,
+            //         password: null,
+            //     });
+            //     navigate('/');
+            // })
         }
         removeFromLocalStorage("isLoggedIn");
         removeFromLocalStorage("session");
