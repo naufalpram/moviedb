@@ -32,7 +32,7 @@ const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
             </ButtonContainer>) : (
             <div className='flex items-center gap-4 relative'>
               <IoMdPerson className='w-8 h-8' />
-              <p className='font-medium'>Hello, {user?.username}</p>
+              <p className='font-medium'>Hello, {user?.name ?? user?.username}</p>
               <div
                 tabIndex='0'
                 role='button'
