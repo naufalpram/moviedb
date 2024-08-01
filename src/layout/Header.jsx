@@ -12,6 +12,10 @@ const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
   function backToHome(e) {
     if (e.key === 'Enter' || e.key === 'Space') navigate('/');
   }
+
+  function keyDownLogoutCollapse(e) {
+    if (e.key === 'Enter' || e.key === 'Space') handleLogoutCollapse(prev => !prev);
+  }
   return (
     <header className='w-full bg-none px-28'>
         <div className='flex justify-between my-4 mx-auto'>
@@ -30,9 +34,12 @@ const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
               <IoMdPerson className='w-8 h-8' />
               <p className='font-medium'>Hello, {user?.username}</p>
               <div
+                tabIndex='0'
+                role='button'
                 className={`w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent 
                   ${isLogoutCollapse ? 'border-b-8 border-b-secondary-200' : 'border-t-8 border-t-secondary-200'} cursor-pointer`}
                 onClick={() => handleLogoutCollapse(prev => !prev)}
+                onKeyDown={(e) => keyDownLogoutCollapse(e)}
               ></div>
               <div className={`w-full h-auto px-4 py-2 absolute top-16 border border-gray-500 rounded ${isLogoutCollapse ? 'visible' : 'hidden'}`}>
                 <button className='w-full text-start' onClick={logout}>Logout</button>
