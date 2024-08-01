@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from 'react'
 import { getFromLocalStorage, getIsLogin, removeFromLocalStorage, saveToLocalStorage } from '../helper/localStorageHelper';
 import Services from '../service';
 import { useNavigate } from 'react-router-dom';
-const { VITE_API_KEY: API_KEY } = import.meta.env;
+const { VITE_API_KEY: API_KEY, VITE_WEB_URL: AUTH_URL } = import.meta.env;
 
 const AuthContext = createContext({
     isLoggedIn: false,
@@ -41,62 +41,124 @@ const AuthProvider = ({ children }) => {
     const login = ({ username, password }) => {
         Services.get("/authentication/token/new", {
             headers: {
-              accept: "application/json",
+                accept: "application/json"
             },
             params: {
-              api_key: API_KEY
+                api_key: API_KEY
             }
         }).then(({ data: newToken }) => {
-            console.log("1st");
-            Services.post("/authentication/token/validate_with_login", {
-                data: {
-                    username: username, 
-                    password: password, 
-                    request_token: newToken?.request_token
-                },
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZjhmNTg1Nzg4NWZjNzZkY2MxYmI0ZjhlYzhlMDYyNiIsInN1YiI6IjY2NDFjMjRjZWZiODBhNzVkMjk2NzMwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j0hMabHqAh-Up3mR72QbVq2WpLIn12UODuJPBlalU_0`,
-                    'content-type': "application/json"
-                  },
-                // params: {
-                //     api_key: "ef8f5857885fc76dcc1bb4f8ec8e0626"
-                // }
-            }).then(({ data: loginValidation }) => {
-                console.log("2nd");
-                Services.post("/authentication/session/new", {
+            Services.get(`${AUTH_URL}/authenticate/${newToken.request_token}/allow`)
+            .then(() => {
+                Services.post("/authentication/token/validate_with_login", {
                     data: {
-                        request_token: loginValidation?.request_token
+                        username: username, 
+                        password: password, 
+                        request_token: newToken?.request_token
                     },
                     headers: {
                         accept: "application/json",
-                        Authorization: `Bearer ${API_KEY}`
-                      }
-                }).then(({ data }) => {
-                    console.log("3rd");
-                    const session = {
-                        sessionId: data?.session_id,
-                        type: "user",
-                        expiresAt: data?.expires_at
-                    };
-                    const user = { username };
-                    saveToLocalStorage("isLoggedIn", data?.success);
-                    saveToLocalStorage("session", JSON.stringify(session));
-                    saveToLocalStorage("user", JSON.stringify(user));
-                    
-                    setIsLoggedIn(data?.success);
-                    setSession(session);
-                    setUser(user);
-                    navigate('/');
+                        Authorization: `Bearer ${API_KEY}`,
+                        'content-type': "application/json"
+                    }
+                }).then(({data: loginValidation}) => {
+                    Services.post("/authentication/session/new", {
+                        data: {
+                            request_token: loginValidation?.request_token
+                        },
+                        headers: {
+                            accept: "application/json",
+                            Authorization: `Bearer ${API_KEY}`
+                          }
+                    }).then(({ data }) => {
+                        const session = {
+                            sessionId: data?.session_id,
+                            type: "user",
+                            expiresAt: data?.expires_at
+                        };
+                        const user = { username };
+                        saveToLocalStorage("isLoggedIn", data?.success);
+                        saveToLocalStorage("session", JSON.stringify(session));
+                        saveToLocalStorage("user", JSON.stringify(user));
+                        
+                        setIsLoggedIn(data?.success);
+                        setSession(session);
+                        setUser(user);
+                        navigate('/');
+                    }).catch((e) => {
+                        console.log('error at getting sessionId');
+                        alert(e);
+                    })
                 }).catch((e) => {
+                    console.log('error at validation with login');
                     alert(e);
                 })
+            }).catch((e) => {
+                console.log('error at authenticating token');
+                alert(e);
             })
-
         }).catch((e) => {
+            console.log('error at getting token');
             alert(e);
         })
     }
+
+    // const login = ({ username, password }) => {
+    //     Services.get("/authentication/token/new", {
+    //         headers: {
+    //           accept: "application/json",
+    //         },
+    //         params: {
+    //           api_key: API_KEY
+    //         }
+    //     }).then(({ data: tokenNew }) => {
+    //         axios.get(`/authenticate/${tokenNew.request_token}/allow`)
+    //         .then(() => {
+    //             Services.post("/authentication/token/validate_with_login", {
+    //                 data: {
+    //                     username: username, 
+    //                     password: password, 
+    //                     request_token: tokenNew?.request_token
+    //                 },
+    //                 headers: {
+    //                     accept: "application/json",
+    //                     Authorization: `Bearer ${API_KEY}`,
+    //                     'content-type': "application/json"
+    //                 }
+    //             })
+    //             .then(({ data: loginValidation }) => {
+    //                 console.log("2nd");
+    //                 Services.post("/authentication/session/new", {
+    //                     data: {
+    //                         request_token: loginValidation?.request_token
+    //                     },
+    //                     headers: {
+    //                         accept: "application/json",
+    //                         Authorization: `Bearer ${API_KEY}`
+    //                       }
+    //                 }).then(({ data }) => {
+    //                     console.log("3rd");
+    //                     const session = {
+    //                         sessionId: data?.session_id,
+    //                         type: "user",
+    //                         expiresAt: data?.expires_at
+    //                     };
+    //                     const user = { username };
+    //                     saveToLocalStorage("isLoggedIn", data?.success);
+    //                     saveToLocalStorage("session", JSON.stringify(session));
+    //                     saveToLocalStorage("user", JSON.stringify(user));
+                        
+    //                     setIsLoggedIn(data?.success);
+    //                     setSession(session);
+    //                     setUser(user);
+    //                     navigate('/');
+    //                 }).catch((e) => {
+    //                     alert(e);
+    //                 })
+    //     })
+    //     }).catch((e) => {
+    //         alert(e);
+    //     })
+    // }
     
     const loginAsGuest = ({ username }) => {
         Services.get("/authentication/guest_session/new", {
@@ -138,23 +200,22 @@ const AuthProvider = ({ children }) => {
                 params: {
                     api_key: API_KEY
                 }
+            }).then(() => {
+                removeFromLocalStorage("isLoggedIn");
+                removeFromLocalStorage("session");
+                removeFromLocalStorage("user");
+                setIsLoggedIn(false);
+                setSession({
+                    sessiondId: null,
+                    type: null,
+                    expiresAt: null
+                });
+                setUser({
+                    email: null,
+                    password: null,
+                });
+                navigate('/');
             })
-            // .then(() => {
-            //     removeFromLocalStorage("isLoggedIn");
-            //     removeFromLocalStorage("session");
-            //     removeFromLocalStorage("user");
-            //     setIsLoggedIn(false);
-            //     setSession({
-            //         sessiondId: null,
-            //         type: null,
-            //         expiresAt: null
-            //     });
-            //     setUser({
-            //         email: null,
-            //         password: null,
-            //     });
-            //     navigate('/');
-            // })
         }
         removeFromLocalStorage("isLoggedIn");
         removeFromLocalStorage("session");
