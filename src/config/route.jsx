@@ -2,6 +2,7 @@ import React from 'react';
 
 const Login = React.lazy(() => import('../pages/Auth/Login'));
 const Register = React.lazy(() => import('../pages/Auth/Register'));
+const LoginApproved = React.lazy(() => import('../pages/Auth/LoginApproved'))
 const Home = React.lazy(() => import('../pages/Home'));
 const List = React.lazy(() => import('../pages/List'));
 const Detail = React.lazy(() => import('../pages/Detail'));
@@ -18,7 +19,9 @@ const privateRoutes = [
     { exact: true, path: '/', name: GenerateTitle('Home'), component: Home },
     { exact: true, path: '/:mediaType', name: GenerateTitle('List'), component: List },
     { exact: true, path: '/:mediaType/:idName', name: GenerateTitle('Detail'), component: Detail },
-    { exact: true, path: '/discover', name: GenerateTitle('Discover'), component: Discover }
+    { exact: true, path: '/discover', name: GenerateTitle('Discover'), component: Discover },
+
+    { exact: true, path: '/login/approved', name: GenerateTitle('Redirecting...'), component: LoginApproved }
 ];
 
 const routes = { public: publicRoutes, private: privateRoutes };

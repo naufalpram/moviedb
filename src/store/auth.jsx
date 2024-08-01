@@ -1,14 +1,15 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useCallback } from 'react'
 import { getFromLocalStorage, getIsLogin, removeFromLocalStorage, saveToLocalStorage } from '../helper/localStorageHelper';
 import Services from '../service';
 import { useNavigate } from 'react-router-dom';
-const { VITE_API_KEY: API_KEY, VITE_WEB_URL: AUTH_URL } = import.meta.env;
+const { VITE_API_KEY: API_KEY, VITE_WEB_URL: AUTH_URL, VITE_AUTH_REDIRECT: APPROVED_URL } = import.meta.env;
 
 const AuthContext = createContext({
     isLoggedIn: false,
     session: {},
     user: {},
     login: () => {},
+    authenticate: () => {},
     loginAsGuest: () => {},
     logout: () => {}
 })
@@ -33,12 +34,12 @@ const AuthProvider = ({ children }) => {
         expiresAt: null
       });
       setUser(JSON.parse(getFromLocalStorage('user')) || {
-        email: null,
-        password: null
+        username: null
       });
     }, [])
 
-    const login = ({ username, password }) => {
+    const authenticate = useCallback(({ username, password }) => {
+        saveToLocalStorage("temp", JSON.stringify({username, password}));
         Services.get("/authentication/token/new", {
             headers: {
                 accept: "application/json"
@@ -47,118 +48,50 @@ const AuthProvider = ({ children }) => {
                 api_key: API_KEY
             }
         }).then(({ data: newToken }) => {
-            Services.get(`${AUTH_URL}/authenticate/${newToken.request_token}/allow`)
-            .then(() => {
-                Services.post("/authentication/token/validate_with_login", {
-                    data: {
-                        username: username, 
-                        password: password, 
-                        request_token: newToken?.request_token
-                    },
-                    headers: {
-                        accept: "application/json",
-                        Authorization: `Bearer ${API_KEY}`,
-                        'content-type': "application/json"
-                    }
-                }).then(({data: loginValidation}) => {
-                    Services.post("/authentication/session/new", {
-                        data: {
-                            request_token: loginValidation?.request_token
-                        },
-                        headers: {
-                            accept: "application/json",
-                            Authorization: `Bearer ${API_KEY}`
-                          }
-                    }).then(({ data }) => {
-                        const session = {
-                            sessionId: data?.session_id,
-                            type: "user",
-                            expiresAt: data?.expires_at
-                        };
-                        const user = { username };
-                        saveToLocalStorage("isLoggedIn", data?.success);
-                        saveToLocalStorage("session", JSON.stringify(session));
-                        saveToLocalStorage("user", JSON.stringify(user));
-                        
-                        setIsLoggedIn(data?.success);
-                        setSession(session);
-                        setUser(user);
-                        navigate('/');
-                    }).catch((e) => {
-                        console.log('error at getting sessionId');
-                        alert(e);
-                    })
-                }).catch((e) => {
-                    console.log('error at validation with login');
-                    alert(e);
-                })
-            }).catch((e) => {
-                console.log('error at authenticating token');
-                alert(e);
-            })
+            window.location.href = `${AUTH_URL}/authenticate/${newToken.request_token}?redirect_to=${APPROVED_URL}`;
         }).catch((e) => {
             console.log('error at getting token');
             alert(e);
         })
-    }
+    }, []);
 
-    // const login = ({ username, password }) => {
-    //     Services.get("/authentication/token/new", {
-    //         headers: {
-    //           accept: "application/json",
-    //         },
-    //         params: {
-    //           api_key: API_KEY
-    //         }
-    //     }).then(({ data: tokenNew }) => {
-    //         axios.get(`/authenticate/${tokenNew.request_token}/allow`)
-    //         .then(() => {
-    //             Services.post("/authentication/token/validate_with_login", {
-    //                 data: {
-    //                     username: username, 
-    //                     password: password, 
-    //                     request_token: tokenNew?.request_token
-    //                 },
-    //                 headers: {
-    //                     accept: "application/json",
-    //                     Authorization: `Bearer ${API_KEY}`,
-    //                     'content-type': "application/json"
-    //                 }
-    //             })
-    //             .then(({ data: loginValidation }) => {
-    //                 console.log("2nd");
-    //                 Services.post("/authentication/session/new", {
-    //                     data: {
-    //                         request_token: loginValidation?.request_token
-    //                     },
-    //                     headers: {
-    //                         accept: "application/json",
-    //                         Authorization: `Bearer ${API_KEY}`
-    //                       }
-    //                 }).then(({ data }) => {
-    //                     console.log("3rd");
-    //                     const session = {
-    //                         sessionId: data?.session_id,
-    //                         type: "user",
-    //                         expiresAt: data?.expires_at
-    //                     };
-    //                     const user = { username };
-    //                     saveToLocalStorage("isLoggedIn", data?.success);
-    //                     saveToLocalStorage("session", JSON.stringify(session));
-    //                     saveToLocalStorage("user", JSON.stringify(user));
-                        
-    //                     setIsLoggedIn(data?.success);
-    //                     setSession(session);
-    //                     setUser(user);
-    //                     navigate('/');
-    //                 }).catch((e) => {
-    //                     alert(e);
-    //                 })
-    //     })
-    //     }).catch((e) => {
-    //         alert(e);
-    //     })
-    // }
+    const login = useCallback((requestToken) => {
+        const temp = JSON.parse(getFromLocalStorage('temp'));
+        const callAction = () => {
+            Services.get(`/authentication/session/new`, {
+                headers: {
+                    accept: "application/json",
+                },
+                params: {
+                    api_key: API_KEY,
+                    request_token: requestToken
+                }
+            }).then(({ data }) => {
+                const session = {
+                    sessionId: data?.session_id,
+                    type: "user",
+                    expiresAt: data?.expires_at
+                };
+                const user = { username: temp.username };
+                saveToLocalStorage("isLoggedIn", data?.success);
+                saveToLocalStorage("session", JSON.stringify(session));
+                saveToLocalStorage("user", JSON.stringify(user));
+                
+                setIsLoggedIn(data?.success);
+                setSession(session);
+                setUser(user);
+
+                removeFromLocalStorage("temp");
+                navigate('/');
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
+        if (!session?.sessionId) {
+            callAction();
+        }
+        
+    }, [navigate, session]);
     
     const loginAsGuest = ({ username }) => {
         Services.get("/authentication/guest_session/new", {
@@ -235,7 +168,7 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            isLoggedIn, session, user, setUser, login, loginAsGuest, logout
+            isLoggedIn, session, user, setUser, login, authenticate, loginAsGuest, logout
         }}>
             {children}
         </AuthContext.Provider>

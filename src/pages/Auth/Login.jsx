@@ -16,7 +16,7 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const guestCheckRef = useRef();
-  const { loginAsGuest ,login } = useAuth();
+  const { loginAsGuest, authenticate } = useAuth();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Login = () => {
     if (password.length < 8) alert('Password must have at least 8 characters');
 
     if (isGuest) loginAsGuest({ username, password });
-    else login({ username, password })
+    else authenticate({ username, password })
   }
 
   return (
