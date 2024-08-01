@@ -2,6 +2,7 @@ import { forwardRef, useRef } from "react";
 import { Button, ButtonContainer } from "../../components";
 import logo from "../../assets/blue_short-moviedb.svg";
 import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const AuthInput = forwardRef(({ title, type, name, ...props }, ref) => {
   return (
@@ -16,6 +17,7 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const guestCheckRef = useRef();
+  const navigate = useNavigate();
   const { loginAsGuest, authenticate } = useAuth();
 
   function handleSubmit(e) {
@@ -33,10 +35,14 @@ const Login = () => {
     else authenticate({ username, password })
   }
 
+  function handleKeydown(e) {
+    if (e.key === 'Enter' || e.key === 'Space') navigate('/')
+  }
+
   return (
     <main className="w-[100vw] flex">
       <section className="h-full w-1/2 bg-gradient-to-r from-primary-400 to-base flex place-content-center">
-        <img src={logo} alt="Movie DB Logo" className="w-[280px] h-auto" />
+        <img tabIndex='0' onKeyDown={(e) => handleKeydown(e)} src={logo} alt="Movie DB Logo" className="w-[280px] h-auto cursor-pointer" onClick={() => navigate('/')} />
       </section>
        <section className="w-1/2 flex justify-center items-center">
           <div className="w-2/3 border-gray-500 border rounded-md p-8">
