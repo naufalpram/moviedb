@@ -72,17 +72,24 @@ const AuthProvider = ({ children }) => {
                     type: "user",
                     expiresAt: data?.expires_at
                 };
-                const user = { username: temp.username };
                 saveToLocalStorage("isLoggedIn", data?.success);
                 saveToLocalStorage("session", JSON.stringify(session));
-                saveToLocalStorage("user", JSON.stringify(user));
                 
                 setIsLoggedIn(data?.success);
                 setSession(session);
-                setUser(user);
-
-                removeFromLocalStorage("temp");
-                navigate('/');
+                
+                Services.get('/account', {
+                    params: {
+                        api_key: API_KEY,
+                        session_id: data?.session_id
+                    }
+                }).then(({ data: accountInfo }) => {
+                    const user = { username: temp.username, id: accountInfo?.id };
+                    saveToLocalStorage("user", JSON.stringify(user));
+                    setUser(user);
+                    removeFromLocalStorage("temp");
+                    navigate('/');
+                })
             }).catch((e) => {
                 console.log(e);
             })
