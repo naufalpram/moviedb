@@ -10,7 +10,7 @@ const DetailData = ({ mediaType, result }) => {
     <section id='detail-data' className='mt-12 w-full'>
         <div className='flex mobile:flex-col-reverse sm:flex-col-reverse md:flex-row justify-center mx-28'>
           <Info result={result} />
-          <ActionSection poster={data?.poster_path || data?.profile_path} homepageUrl={data?.homepage} type={mediaType} />
+          <ActionSection mediaId={data?.id} poster={data?.poster_path || data?.profile_path} homepageUrl={data?.homepage} type={mediaType} />
         </div>
     </section>
   )

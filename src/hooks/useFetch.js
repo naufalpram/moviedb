@@ -41,7 +41,8 @@ function stateReducer(state, action) {
 }
 
 const defaultConfig = {
-    withQueryParams: false
+    withQueryParams: false,
+    onMount: true
 };
 
 // dataMapper must return object with property "data"
@@ -81,7 +82,7 @@ export const useFetch = (url, paramsArgs = {}, dataMapper, configArgs = {}) => {
     }, [config.withQueryParams, url, params, pushParamsToHistory, dataMapper]);
 
     useEffect(() => {
-        fetchData();
-    }, [params, fetchData]);
+        if (config.onMount) fetchData();
+    }, [params, fetchData, config.onMount]);
     return {...state, params, setParams, fetchData};
 }
