@@ -8,15 +8,16 @@ const styles = {
     unselect: "bg-unselect-gray/20 text-white/20 border-[0.5px] border-white/20",
 }
 
-const Button = ({ variant = "primary", onClick, icon, children, ...props }) => {
+const Button = ({ variant = "primary", onClick, icon, children, isLoading, ...props }) => {
   return (
     <button 
-        className={`flex gap-1 px-7 py-3 min-h-8 rounded-[20px] text-sm font-medium transition-all ${styles[variant]} ${!props.disabled ? 'cursor-pinter': ''}`}
+        className={`flex justify-center gap-1 px-7 py-3 min-h-8 rounded-[20px] text-sm font-medium transition-all ${styles[variant]} ${!isLoading ? !props.disabled ? 'cursor-pointer': '' : 'cursor-not-allowed'}`}
         onClick={onClick}
         {...props}
     >
-        {children}
-        {icon && <span className='w-4 h-4'>{icon}</span>}
+        {isLoading && 'Loading'}
+        {!isLoading && children}
+        {!isLoading && icon && <span className='w-4 h-4'>{icon}</span>}
     </button>
   )
 }

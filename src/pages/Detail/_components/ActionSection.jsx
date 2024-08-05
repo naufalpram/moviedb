@@ -47,7 +47,7 @@ const ActionSection = ({ mediaId, poster, homepageUrl, type }) => {
     }
 
     if (type === 'movie' || type === 'tv') {
-      service.post(`/account/${user.id}/favorite`, {
+      service.post(`/account/${user?.id}/favorite`, {
         headers: {
           accept: "application/json",
         },
@@ -58,7 +58,7 @@ const ActionSection = ({ mediaId, poster, homepageUrl, type }) => {
         },
         params: {
           api_key: API_KEY,
-          session_id: session.sessionId
+          session_id: session?.sessionId
         }
       }).then(() => {
         setIsFavorite(prev => !prev);
