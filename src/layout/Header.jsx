@@ -17,8 +17,8 @@ const Header = ({ isLogoutCollapse, handleLogoutCollapse }) => {
     if (e.key === 'Enter' || e.key === 'Space') handleLogoutCollapse(prev => !prev);
   }
   return (
-    <header className='w-full bg-none px-28'>
-        <div className='flex justify-between my-4 mx-auto'>
+    <header className='w-full bg-none px-28 sticky top-0 z-30'>
+        <div className='flex justify-between my-4 mx-auto backdrop-blur-sm'>
           <img tabIndex='0' onKeyDown={(e) => backToHome(e)} src={navLogo} alt="Movie DB Logo" className='h-20 h w-32 min-h-16 min-w-28 cursor-pointer' onClick={() => navigate('/')}/>
           <nav className='md:flex md:visible hidden items-center gap-20 font-medium pl-12'>
             <button className='cursor-pointer' onClick={() => navigate('/movie')}>Movies</button>
