@@ -14,7 +14,7 @@ const Result = ({ mediaType, category, latestPage }) => {
   // every media change, do fetch
   useEffect(() => {
     fetchData()
-  }, [mediaType, category, latestPage]);
+  }, [mediaType, category, latestPage, fetchData]);
 
   return (
     <section id='list-result' className='mt-12 flex w-full'>

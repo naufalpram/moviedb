@@ -18,7 +18,7 @@ const Trending = () => {
 
   useEffect(() => {
     fetchData();
-  }, [timeWindow]);
+  }, [timeWindow, fetchData]);
 
   function handleSelectMenu(_timeWindow) {
     setTimeWindow(_timeWindow);

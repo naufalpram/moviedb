@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { Input } from '../../components'
 import { useQuery } from '../../hooks/useQuery';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const navigate = useNavigate();

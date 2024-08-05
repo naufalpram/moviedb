@@ -12,7 +12,7 @@ const Home = ({ title }) => {
   const { handleQueryChange } = useQuery();
   useEffect(() => {
     handleQueryChange({query: null});
-  }, []);
+  }, [handleQueryChange]);
 
   return (
     <main className='w-[100vw]'>

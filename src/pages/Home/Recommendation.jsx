@@ -13,7 +13,7 @@ const Recommendation = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <section id='recommendation' className='mt-10 w-full'>

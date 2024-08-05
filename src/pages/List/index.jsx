@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ListHead from './ListHead'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { MEDIA_MENU } from '../../config/media';
 import Result from './Result';
 import SearchResult from './SearchResult';
@@ -8,13 +8,12 @@ import { useQuery } from '../../hooks/useQuery';
 
 const List = ({ title }) => {
   document.title = title
-  const navigate = useNavigate();
   const { mediaType } = useParams();
   const [media, setMedia] = useState({
     mediaType,
     category: MEDIA_MENU[mediaType]?.menu[0].path
   })
-  const [latestPage, setLatestPage] = useState(1);
+  const [latestPage] = useState(1);
   const { queryParams, handleQueryChange } = useQuery();
 
   // for mediatype change in params
