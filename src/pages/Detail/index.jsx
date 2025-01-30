@@ -41,7 +41,7 @@ const Detail = ({ title }) => {
         {mediaType !== 'person' && 
           <div className='w-full h-[480px] relative'>
               <div className='w-full h-full absolute z-10 bg-black/70'></div>
-              <img src={`${IMAGE_FETCH_URL}${data?.backdrop_path}`} alt="Backrop Image" className='w-full h-full object-cover' />
+              <img src={`${IMAGE_FETCH_URL}${data?.backdrop_path}`} alt="Backdrop Image" className='w-full h-full object-cover' />
           </div>
         }
         <DetailData id={id} mediaType={mediaType} result={{
