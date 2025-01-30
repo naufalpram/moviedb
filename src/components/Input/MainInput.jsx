@@ -25,7 +25,7 @@ const MainInput = ({ placeholder, onSearch }) => {
           type="text"
           placeholder={placeholder}
           className='w-full h-12 py-4 pl-8 pr-20 rounded-3xl focus:outline-none'
-          onKeyDown={handleEnter} 
+          onKeyUp={handleEnter} 
         />
         <IoIosSearch role='button' aria-roledescription='search button' className='absolute right-8 w-6 h-6 cursor-pointer' onClick={() => handleSearch(inputRef.current.value)} />
     </div>

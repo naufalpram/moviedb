@@ -1,6 +1,6 @@
 
 import { MdErrorOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;
 
 const EmptyImage = () => (
@@ -10,25 +10,17 @@ const EmptyImage = () => (
   </div>
 )
 
-const Card = ({ path, imagePath, title, date}) => {
-  const navigate = useNavigate(); 
-
-  function keyboardClick(e) {
-    if (e.key === 'Enter' || e.key === 'Space') navigate(path);
-  }
-
-  return (
-    <div tabIndex='0' onKeyDown={(e) => keyboardClick(e)} className={`flex flex-col gap-4 items-center min-w-52`} onClick={() => navigate(path)}>
-        {imagePath ? 
-          <img src={`${IMAGE_FETCH_URL}${imagePath}`} alt={`${title} poster`} className='w-52 h-auto min-h-80 rounded-md cursor-pointer' /> : 
-          <EmptyImage />
-        }
-        <div className='text-center'>
-          {title && <p role='button' className='m-0 font-semibold max-w-48 hover:text-secondary-200 cursor-pointer' onClick={() => navigate(path)}>{title}</p>}
-          {date && <p className='text-sm font-semibold max-w-48 text-unselect-gray'>{date}</p>}
-        </div>
-    </div>
-  )
-}
+const Card = ({ path, imagePath, title, date}) => (
+  <Link tabIndex='0' className='flex flex-col gap-4 items-center min-w-52 m-1' to={path}>
+      {imagePath ? 
+        <img src={`${IMAGE_FETCH_URL}${imagePath}`} alt={`${title} poster`} className='w-52 h-auto min-h-80 rounded-md cursor-pointer' /> : 
+        <EmptyImage />
+      }
+      <div className='text-center'>
+        {title && <p role='button' className='m-0 font-semibold max-w-48 hover:text-secondary-200 cursor-pointer'>{title}</p>}
+        {date && <p className='text-sm font-semibold max-w-48 text-unselect-gray'>{date}</p>}
+      </div>
+  </Link>
+)
 
 export default Card

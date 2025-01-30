@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 
 const styles = {
@@ -8,8 +9,19 @@ const styles = {
     unselect: "bg-unselect-gray/20 text-white/20 border-[0.5px] border-white/20",
 }
 
-const Button = ({ variant = "primary", onClick, icon, children, isLoading, ...props }) => {
-  return (
+const Button = ({ variant = "primary", href = null, onClick, icon, children, isLoading, ...props }) => {
+  return href ? (
+    <Link 
+        className={`flex justify-center gap-1 px-7 py-3 min-h-8 rounded-[20px] text-sm font-medium transition-all ${styles[variant]} ${!isLoading ? !props.disabled ? 'cursor-pointer': '' : 'cursor-not-allowed'}`}
+        onClick={onClick}
+        to={href}
+        {...props}
+    >
+        {isLoading && 'Loading'}
+        {!isLoading && children}
+        {!isLoading && icon && <span className='w-4 h-4'>{icon}</span>}
+    </Link>
+  ) : (
     <button 
         className={`flex justify-center gap-1 px-7 py-3 min-h-8 rounded-[20px] text-sm font-medium transition-all ${styles[variant]} ${!isLoading ? !props.disabled ? 'cursor-pointer': '' : 'cursor-not-allowed'}`}
         onClick={onClick}

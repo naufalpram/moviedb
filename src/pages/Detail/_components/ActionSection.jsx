@@ -5,13 +5,6 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
 const { VITE_IMAGE_URL: IMAGE_FETCH_URL, VITE_API_KEY: API_KEY } = import.meta.env;
 
-function onClickUrl(url) {
-    if (url && url.trim() !== '') {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-        if (newWindow) newWindow.opener = null;
-    }
-}
-
 const ActionSection = ({ mediaId, poster, homepageUrl, type }) => {
   const { session, user } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
@@ -77,9 +70,11 @@ const ActionSection = ({ mediaId, poster, homepageUrl, type }) => {
               <Button variant={isFavorite ? 'secondary' : 'ternaryYellow'} onClick={addToFavorite}>
                 {!isLoading ? isFavorite ? 'Remove from Favorite' : 'Add to Favorite' : 'Loading...'}
               </Button>
-              <Button variant='primary' onClick={() => onClickUrl(homepageUrl)} icon={<IoMdOpen style={{width: '20px', height: '20px'}} />}>
-              Visit Page
-              </Button>
+                <Button variant='primary' icon={<IoMdOpen style={{width: '20px', height: '20px'}} />}>
+                  <a href={homepageUrl} target='_blank' rel='noopener noreferrer'>
+                      Visit Page
+                  </a>
+                </Button>
               
           </ButtonContainer>
         }

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import DetailData from './DetailData';
 import Review from './Review';
 import { useQuery } from '../../hooks/useQuery';
@@ -10,7 +10,6 @@ const { VITE_IMAGE_URL: IMAGE_FETCH_URL } = import.meta.env;
 
 const Detail = ({ title }) => {
   document.title = title;
-  const navigate = useNavigate();
   const { handleQueryChange } = useQuery();
   const { mediaType, idName } = useParams();
   const id = idName.split('-')[0];
@@ -36,7 +35,9 @@ const Detail = ({ title }) => {
 
   return (
     <main className='w-[100vw] relative'>
-      <IoMdArrowBack size={40} cursor='pointer' className='absolute top-4 left-28 z-20' onClick={() => navigate(-1)} />
+      <Link to={-1}>
+        <IoMdArrowBack size={40} cursor='pointer' className='absolute top-4 left-28 z-20' />
+      </Link>
         {mediaType !== 'person' && 
           <div className='w-full h-[480px] relative'>
               <div className='w-full h-full absolute z-10 bg-black/70'></div>
